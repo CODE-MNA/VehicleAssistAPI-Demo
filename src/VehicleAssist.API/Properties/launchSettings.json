@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:5423",
-      "sslPort": 44306
+      "applicationUrl": "http://localhost:57994",
+      "sslPort": 44387
     }
   },
   "profiles": {
-    "Main.WebApplication": {
+    "VehicleAssist.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7020;http://localhost:5020",
+      "applicationUrl": "https://localhost:7264;http://localhost:5264",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
