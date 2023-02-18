@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleAssist.APIContracts\VehicleAssist.APIContracts.csproj" />
+    <ProjectReference Include="..\VehicleAssist.Application\VehicleAssist.Application.csproj" />
+    <ProjectReference Include="..\VehicleAssist.Infrastructure\VehicleAssist.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

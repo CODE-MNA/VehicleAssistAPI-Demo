@@ -9,5 +9,10 @@ namespace VehicleAssist.Infrastructure.Authentication
 {
     public class TokenGenerator : ITokenGenerator
     {
+        public string GenerateToken(int userID, string username, string email)
+        {
+         
+            throw new NotImplementedException();    
+        }
     }
 }
