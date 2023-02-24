@@ -42,7 +42,7 @@ namespace VehicleAssist.Application.Authentication.Queries
                 LoginQueryResult result = new LoginQueryResult()
                 {
                     userId = member.MemberID,
-                    token = _tokenGenerator.GenerateToken(member.MemberID, member.FirstName, member.Email)
+                    token = _tokenGenerator.GenerateToken(member.MemberID, member.Email)
 
                 };
 

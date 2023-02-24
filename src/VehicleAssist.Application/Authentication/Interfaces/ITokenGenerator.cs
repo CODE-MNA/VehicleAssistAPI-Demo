@@ -8,6 +8,6 @@ namespace VehicleAssist.Application.Authentication.Interfaces
 {
     public interface ITokenGenerator
     {
-        public string GenerateToken(int userID,string username, string email);
+        public string GenerateToken(int userID,string email);
     }
 }

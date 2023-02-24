@@ -9,15 +9,13 @@ namespace VehicleAssist.Infrastructure.Temporary
 {
     public class MockTokenGenerator : ITokenGenerator
     {
-        public string GenerateToken(int userID, string username, string email)
+        public string GenerateToken(int userID, string email)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append("TempToken");
             sb.Append("-");
             sb.Append(userID);
-            sb.Append("-");
-            sb.Append(username);
             sb.Append("-");
             sb.Append(email);
 
