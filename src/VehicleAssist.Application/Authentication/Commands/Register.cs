@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Application.Authentication.Interfaces;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Member;
 
@@ -59,21 +60,30 @@ namespace VehicleAssist.Application.Authentication.Commands
 
 
 
+
+
+
+
     /// <summary>
     /// Checks if user already registered. If they aren't registers them to the database
     /// </summary>
     internal class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
     {
 
+        //Injection
         IMemberRepository _memberRepository;
         IUnitOfWork _unitOfWork;
-
-        public RegisterCommandHandler(IMemberRepository memberRepository, IUnitOfWork unitOfWork)
+        IPasswordHasher _passwordHasher;
+        public RegisterCommandHandler(IMemberRepository memberRepository, IUnitOfWork unitOfWork, IPasswordHasher hasher)
         {
             _memberRepository = memberRepository;
             _unitOfWork = unitOfWork;
+            _passwordHasher = hasher;
         }
 
+
+
+        //Handle
         public async Task<RegisterCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             //Validate The Register Command Object
@@ -92,22 +102,28 @@ namespace VehicleAssist.Application.Authentication.Commands
             if(member != null)
             {
                 throw new Exception("Member already registered. Email already exists");
-            } 
+            }
             //TODO : Send Confirmation Email
 
-            //Add The Member To The Database
+
+            //TODO : Hash Password
+            string hashedPassword = _passwordHasher.HashPassword(request.Password);
+
+            Member addingMember = Member.CreateMemberFromRegisterData(request.Name,request.Name, request.Email, hashedPassword);
+
+            _memberRepository.Add(addingMember);
 
 
-            
 
          
             return new RegisterCommandResult()
             {
-                Result = "Done"
+                Result = "Done",
+                AllMembers= _memberRepository.GetList().ToList(),
+                
             };
         }
     }
-
 
     /// <summary>
     /// Output from the handler
@@ -115,5 +131,12 @@ namespace VehicleAssist.Application.Authentication.Commands
     public record RegisterCommandResult
     {
         public string Result { get; set; }
+
+        //TEMP
+        public List<Member> AllMembers { get; set; }
+
     }
+
+
+
 } 

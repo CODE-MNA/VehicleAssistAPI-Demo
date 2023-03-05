@@ -10,13 +10,13 @@ namespace VehicleAssist.Application.Authentication.Queries
 
         ITokenGenerator _tokenGenerator;
         IMemberRepository _memberRepository;
-     
+        IPasswordHasher _passwordHasher;
 
 
-        public LoginQueryHandler(ITokenGenerator tokenGenerator, IMemberRepository memberRepository) { 
+        public LoginQueryHandler(ITokenGenerator tokenGenerator, IMemberRepository memberRepository, IPasswordHasher hasher) { 
             _tokenGenerator = tokenGenerator;
             _memberRepository = memberRepository;
-           
+           _passwordHasher = hasher;
 
         }
 
@@ -34,15 +34,20 @@ namespace VehicleAssist.Application.Authentication.Queries
                 throw new ArgumentException("Email Doesn't Exist");
             }
 
+            //ADD ROLES
+            if (!member.UserActivated) throw new ArgumentException("User not activated");
 
-            if (request.email == request.password)
+
+
+
+            if (_passwordHasher.VerifyPassword(member.PasswordHash,request.password))
             {
 
 
                 LoginQueryResult result = new LoginQueryResult()
                 {
                     userId = member.MemberID,
-                    token = _tokenGenerator.GenerateToken(member.MemberID, member.Email)
+                    token = _tokenGenerator.GenerateToken(member)
 
                 };
 

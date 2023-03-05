@@ -14,5 +14,11 @@ namespace VehicleAssist.Application.Authentication
 
         [JsonPropertyName("token")]
         public string token { get; set; }
+
+
+        public bool isCompany { get; set; }
+
+        public int? companyId { get; set; }
+        
     }
 }

@@ -26,8 +26,10 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IMemberRepository, FakeMemberRepository>();
             services.AddScoped<IUnitOfWork,TempUoW>();
 
-            //services.AddScoped<ITokenGenerator, MockTokenGenerator>();
 
+
+            //Temp
+            services.AddScoped<IPasswordHasher, MockPasswordHasher>();
 
 
             return services;
@@ -61,6 +63,8 @@ namespace VehicleAssist.Infrastructure
             services.AddSingleton(Options.Create(configObject));
 
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+            
 
 
             return services;

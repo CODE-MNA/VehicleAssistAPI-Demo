@@ -21,7 +21,7 @@ namespace VehicleAssist.Infrastructure.Data
 
         public void CommitChanges()
         {
-            Console.WriteLine("Saved POG");
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

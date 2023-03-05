@@ -8,7 +8,7 @@ using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Application.Repositories
 {
-    public interface IMemberRepository
+    public interface IMemberRepository : IBaseRepository<Member>
     {
         public Member GetMemberByID(int id);
 

@@ -51,6 +51,7 @@ namespace VehicleAssist.API.Controllers
         [HttpPost("auth/local/[action]")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
+            
             if (request == null) return BadRequest();
 
             RegisterCommand command = new RegisterCommand(request.Name,
@@ -74,5 +75,14 @@ namespace VehicleAssist.API.Controllers
             }
 
         }
+
+        // Register
+
+        //request model
+
+        //Route
+
+        //result model
+        
     }
 }

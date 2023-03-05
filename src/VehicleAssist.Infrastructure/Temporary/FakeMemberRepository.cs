@@ -8,63 +8,26 @@ using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Infrastructure.Temporary
 {
-    public class FakeMemberRepository : IMemberRepository
+    public class FakeMemberRepository : FakeBaseRepository<Member>,IMemberRepository
     {
 
-        public List<Member> Members { get; set; }
+        public List<Member> Members { get => GetList().ToList(); }
 
         public FakeMemberRepository()
         {
-            Members = new List<Member>();
-            Members.Add(new Member()
-            {
-                Email = "anoman@ik.com",
-                FirstName = "An",
-                LastName = " Oman",
-                MemberID = 1
+          _list = new List<Member>();
 
-            });
-
-            Members.Add(new Member()
-            {
-                Email = "spyxfam@anime.com",
-                FirstName = "Anya",
-                LastName = "Forger",
-                MemberID = 2
-
-            });
-            Members.Add(new Member()
-            {
-                Email = "2spyxfam@anime.com",
-                FirstName = "Loid",
-                LastName = "Forger",
-                MemberID = 3
-
-            });
-            Members.Add(new Member()
-            {
-                Email = "mrrobot@tvshow.com",
-                FirstName = "Ram",
-                LastName = "Elliot",
-                MemberID = 4
-
-            });
-            Members.Add(new Member()
-            {
-                Email = "brbad@tvshow.com",
-                FirstName = "Walter",
-                LastName = "Hartwell-White",
-                MemberID = 5
-
-            });
-            Members.Add(new Member()
-            {
-                Email = "test@test.com",
-                FirstName = "Test",
-                LastName = "Test",
-                MemberID = 6
-            });
+            InitializeFakeData();
         }
+
+        void InitializeFakeData()
+        {
+            _list.Add(Member.CreateMemberFromRegisterData("ABC", "DEF", "GHI@gmail.com", "Temp(abc)"));
+            _list.Add(Member.CreateMemberFromRegisterData("doc", "ter", "docter@gmail.com", "Temp(doc)"));
+            _list.Add(Member.CreateMemberFromRegisterData("test", "test", "test@test.com", "Temp(test)"));
+        }
+
+
         public Member GetMemberByID(int id)
         {
             //throw not found exception

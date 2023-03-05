@@ -6,36 +6,43 @@ using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain;
 
-namespace VehicleAssist.Infrastructure.Data
+namespace VehicleAssist.Infrastructure.Temporary
 {
-    public class EFRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class FakeBaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
+        protected List<T> _list;
 
-        
-
+     
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            
+           _list.Add(entity);
         }
 
         public void DeleteById(object id)
         {
-            throw new NotImplementedException();
+           T obj = GetById(id);
+
+            _list.Remove(obj);
+
         }
 
         public T GetById(object id)
         {
-            throw new NotImplementedException();
+            return _list.Where((T x )=> x.Id == (int)id).First();
         }
 
         public IEnumerable<T> GetList()
         {
-            throw new NotImplementedException();
+            return _list.AsReadOnly();
         }
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            int entityID = entity.Id;
+            DeleteById(entityID);
+
+            Add(entity);
         }
     }
 }

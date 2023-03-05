@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Authentication.Interfaces;
+using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Infrastructure.Authentication
 {
@@ -21,14 +22,18 @@ namespace VehicleAssist.Infrastructure.Authentication
             _tokenConfiguration = tokenConfiguration.Value;
         }
 
-        public string GenerateToken(int userID, string email)
+        public string GenerateToken(Member member)
         {
+            string email = member.Email;
+            string userID = member.MemberID.ToString();
          
             List<Claim> claims = new List<Claim>();
 
             //Your Claims
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userID));
+            claims.Add(new Claim(type:"user_activated", value:member.UserActivated.ToString()));
 
 
 

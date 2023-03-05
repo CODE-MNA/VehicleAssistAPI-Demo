@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Application.Authentication.Interfaces
 {
-    public interface ITokenGenerator
+    public interface IPasswordHasher
     {
-        public string GenerateToken(Member member);
+        string HashPassword(string password);
+        bool VerifyPassword(string hash,string password);
     }
 }
