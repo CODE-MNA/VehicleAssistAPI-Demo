@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Domain;
+using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Application.Repositories
@@ -13,5 +14,6 @@ namespace VehicleAssist.Application.Repositories
         public Member? FindMemberByUsername (string username);
 
         public Member? FindMemberByEmail(string email);
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
+using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Member;
 using VehicleAssist.Infrastructure.Data;
 
@@ -35,5 +36,6 @@ namespace VehicleAssist.Infrastructure.Authentication
             return members.FirstOrDefault(defaultValue: null);
 
         }
+
     }
 }
