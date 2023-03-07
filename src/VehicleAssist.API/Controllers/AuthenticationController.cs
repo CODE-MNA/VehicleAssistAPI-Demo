@@ -50,7 +50,7 @@ namespace VehicleAssist.API.Controllers
         }
 
         [HttpPost("auth/local/[action]")]
-        public async Task<IActionResult> Register(CustomerRegisterRequest request)
+        public async Task<IActionResult> RegisterCustomer(CustomerRegisterRequest request)
         {
             
             if (request == null) return BadRequest();

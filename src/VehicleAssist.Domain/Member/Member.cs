@@ -22,8 +22,9 @@ namespace VehicleAssist.Domain.Member
         public string UserName { get; protected set; }
         public string PasswordHash { get; protected set; }
 
-        public bool UserActivated { get; protected set; }
+        public string MemberType { get; protected set; }
 
+        public bool UserActivated { get; protected set; }
         public DateTime? UserActivatedDate { get; protected set; }
         
         protected Member()

@@ -12,8 +12,8 @@ using VehicleAssist.Infrastructure.Data;
 namespace VehicleAssist.Infrastructure.Migrations
 {
     [DbContext(typeof(VehicleAssistDBContext))]
-    [Migration("20230307004141_test")]
-    partial class test
+    [Migration("20230307034221_newconfig")]
+    partial class newconfig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,7 @@ namespace VehicleAssist.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Member.Member", b =>
@@ -75,6 +75,10 @@ namespace VehicleAssist.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -89,6 +93,10 @@ namespace VehicleAssist.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("MemberType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -108,7 +116,9 @@ namespace VehicleAssist.Infrastructure.Migrations
 
                     b.ToTable("Members");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Member");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Reminders.Reminder", b =>
@@ -147,7 +157,7 @@ namespace VehicleAssist.Infrastructure.Migrations
 
                     b.HasIndex("CustomerMemberId");
 
-                    b.ToTable("Reminder");
+                    b.ToTable("Reminders");
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Company.Company", b =>
@@ -161,14 +171,14 @@ namespace VehicleAssist.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Companies");
+                    b.HasDiscriminator().HasValue("Company");
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Customer.Customer", b =>
                 {
                     b.HasBaseType("VehicleAssist.Domain.Member.Member");
 
-                    b.ToTable("Customer");
+                    b.HasDiscriminator().HasValue("Customer");
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Customer.Vehicle", b =>
@@ -187,24 +197,6 @@ namespace VehicleAssist.Infrastructure.Migrations
                     b.HasOne("VehicleAssist.Domain.Customer.Customer", null)
                         .WithMany("Reminders")
                         .HasForeignKey("CustomerMemberId");
-                });
-
-            modelBuilder.Entity("VehicleAssist.Domain.Company.Company", b =>
-                {
-                    b.HasOne("VehicleAssist.Domain.Member.Member", null)
-                        .WithOne()
-                        .HasForeignKey("VehicleAssist.Domain.Company.Company", "MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("VehicleAssist.Domain.Customer.Customer", b =>
-                {
-                    b.HasOne("VehicleAssist.Domain.Member.Member", null)
-                        .WithOne()
-                        .HasForeignKey("VehicleAssist.Domain.Customer.Customer", "MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Customer.Customer", b =>

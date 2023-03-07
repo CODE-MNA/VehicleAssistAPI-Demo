@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Domain.Appointments;
 using VehicleAssist.Domain.Member;
 using VehicleAssist.Domain.Reminders;
 
@@ -11,7 +12,7 @@ namespace VehicleAssist.Domain.Customer
     public class Customer : Member.Member
     {
 
-
+        public List<Appointment> Appointments { get; private set; }
         public List<Vehicle>? Vehicles { get; private set; }
         public List<Reminder>? Reminders { get; private set; }
 

@@ -14,7 +14,10 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
-           
+
+            builder.HasMany(c => c.CompanyServices);
+
+            builder.HasMany(c => c.DealServices);
         }
     }
 }

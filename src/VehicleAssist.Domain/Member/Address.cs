@@ -8,6 +8,7 @@ namespace VehicleAssist.Domain.Member
 {
     public class Address
     {
+        public int AddressId { get; set; }
         string Street1 { get; set; }
         string? Street2 { get; set; }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VehicleAssist.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class newconfig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +25,11 @@ namespace VehicleAssist.Infrastructure.Migrations
                     UserName = table.Column<string>(type: "varchar(50)", nullable: false),
                     PasswordHash = table.Column<string>(type: "varchar(50)", nullable: false),
                     UserActivated = table.Column<bool>(type: "bit", nullable: false),
-                    UserActivatedDate = table.Column<DateTime>(type: "datetime", nullable: true)
+                    MemberType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserActivatedDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,43 +37,7 @@ namespace VehicleAssist.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Companies",
-                columns: table => new
-                {
-                    MemberId = table.Column<int>(type: "int", nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompanyDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Companies", x => x.MemberId);
-                    table.ForeignKey(
-                        name: "FK_Companies_Members_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Members",
-                        principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    MemberId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.MemberId);
-                    table.ForeignKey(
-                        name: "FK_Customer_Members_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Members",
-                        principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reminder",
+                name: "Reminders",
                 columns: table => new
                 {
                     ReminderId = table.Column<int>(type: "int", nullable: false)
@@ -84,16 +52,16 @@ namespace VehicleAssist.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reminder", x => x.ReminderId);
+                    table.PrimaryKey("PK_Reminders", x => x.ReminderId);
                     table.ForeignKey(
-                        name: "FK_Reminder_Customer_CustomerMemberId",
+                        name: "FK_Reminders_Members_CustomerMemberId",
                         column: x => x.CustomerMemberId,
-                        principalTable: "Customer",
+                        principalTable: "Members",
                         principalColumn: "MemberId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicle",
+                name: "Vehicles",
                 columns: table => new
                 {
                     VehicleId = table.Column<int>(type: "int", nullable: false)
@@ -108,23 +76,23 @@ namespace VehicleAssist.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicle", x => x.VehicleId);
+                    table.PrimaryKey("PK_Vehicles", x => x.VehicleId);
                     table.ForeignKey(
-                        name: "FK_Vehicle_Customer_CustomerId",
+                        name: "FK_Vehicles_Members_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Members",
                         principalColumn: "MemberId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reminder_CustomerMemberId",
-                table: "Reminder",
+                name: "IX_Reminders_CustomerMemberId",
+                table: "Reminders",
                 column: "CustomerMemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicle_CustomerId",
-                table: "Vehicle",
+                name: "IX_Vehicles_CustomerId",
+                table: "Vehicles",
                 column: "CustomerId");
         }
 
@@ -132,16 +100,10 @@ namespace VehicleAssist.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "Reminders");
 
             migrationBuilder.DropTable(
-                name: "Reminder");
-
-            migrationBuilder.DropTable(
-                name: "Vehicle");
-
-            migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "Members");

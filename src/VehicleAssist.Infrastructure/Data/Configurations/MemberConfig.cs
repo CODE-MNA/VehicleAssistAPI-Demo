@@ -15,9 +15,8 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Member> builder)
         {
-            builder.UseTptMappingStrategy();
-
-
+            builder.HasDiscriminator(b=>b.MemberType);
+            
             builder.Property(m => m.UserName).HasColumnType("varchar(50)");
             builder.Property(m => m.PasswordHash).HasColumnType("varchar(50)");
 

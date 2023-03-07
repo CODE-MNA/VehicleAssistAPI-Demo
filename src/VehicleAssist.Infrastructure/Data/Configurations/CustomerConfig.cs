@@ -13,8 +13,10 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.OwnsMany(c => c.Vehicles);
 
-            //builder.HasMany(c => c.Vehicles).WithOne(v => v.Customer).HasForeignKey(v => v.CustomerId);
+            builder.OwnsMany(c=>c.Reminders);
+
         }
     }
 }

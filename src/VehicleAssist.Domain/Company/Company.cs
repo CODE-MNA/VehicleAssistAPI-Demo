@@ -8,9 +8,17 @@ namespace VehicleAssist.Domain.Company
 {
     public class Company : Member.Member
     {
+
         public string CompanyName { get; set; }
 
         public string? CompanyDescription { get; set; }
+
+        public List<CompanyService> CompanyServices { get; set; }
+
+        public List<Deal> DealServices { get; set; }
+
+
+
 
         protected static Company CreateCompanyFromRegisterData(string username, string firstName, string lastName,
           string email, string phoneNumber, string passwordHash,string companyName, string? companyDescription = null)
@@ -23,15 +31,6 @@ namespace VehicleAssist.Domain.Company
                 company.CompanyDescription= companyDescription;
 
             return company;
-
-
-            //Customer
-
-
-            //Company
-            //extra
-
-
 
         }
 
