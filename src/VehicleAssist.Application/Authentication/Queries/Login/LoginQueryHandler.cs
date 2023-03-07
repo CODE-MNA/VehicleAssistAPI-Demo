@@ -24,7 +24,7 @@ namespace VehicleAssist.Application.Authentication.Queries
         {
 
             //Find if email exists
-            Member member = _memberRepository.FindMemberByUsername(request.username);
+            Member? member = _memberRepository.FindMemberByUsername(request.username);
 
 
 
@@ -41,15 +41,17 @@ namespace VehicleAssist.Application.Authentication.Queries
 
             if (_passwordHasher.VerifyPassword(member.PasswordHash,request.password))
             {
-
+               
 
                 LoginQueryResult result = new LoginQueryResult()
                 {
-                    userId = member.MemberId,
-                    token = _tokenGenerator.GenerateToken(member)
+                    MemberId = member.MemberId,
+                    
+                    Token = _tokenGenerator.GenerateToken(member)
 
                 };
 
+                result.IsCompany = member.MemberType == "Company";
                
                 return result;
 

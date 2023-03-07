@@ -20,7 +20,7 @@ namespace VehicleAssist.Domain.Company
 
 
 
-        protected static Company CreateCompanyFromRegisterData(string username, string firstName, string lastName,
+        public static Company CreateCompanyFromRegisterData(string username, string firstName, string lastName,
           string email, string phoneNumber, string passwordHash,string companyName, string? companyDescription = null)
         {
           Member.Member member = CreateMemberFromRegisterData(username, firstName, lastName, email, phoneNumber, passwordHash);

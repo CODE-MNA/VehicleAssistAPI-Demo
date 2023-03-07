@@ -9,16 +9,16 @@ namespace VehicleAssist.Application.Authentication
 {
     public record LoginQueryResult
     {
-        [JsonPropertyName("userId")]
-        public int userId { get; set; }
+      
+        public int MemberId { get; set; }
 
-        [JsonPropertyName("token")]
-        public string token { get; set; }
+      
+        public string Token { get; set; }
 
-
-        public bool isCompany { get; set; }
-
-        public int? companyId { get; set; }
         
+
+    
+        public bool IsCompany { get; set; }
+
     }
 }

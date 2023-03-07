@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Authentication.Interfaces;
 using VehicleAssist.Application.Repositories;
+using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
 
@@ -16,7 +17,7 @@ namespace VehicleAssist.Application.Authentication.Commands
     /// <summary>
     /// Input DTO to the register handler 
     /// </summary>
-    public record RegisterCustomerCommand : IRequest<RegisterCustomerCommandResult>
+    public record RegisterCommand : IRequest<RegisterCustomerCommandResult>
     {
 
         
@@ -37,6 +38,10 @@ namespace VehicleAssist.Application.Authentication.Commands
 
         public string ConfirmPassword { get; set; }
 
+        public string? CompanyName { get; set; }
+        public string? CompanyDescription { get; set; }
+
+        public bool IsCompany { get; set; }
 
       
     }
@@ -45,7 +50,7 @@ namespace VehicleAssist.Application.Authentication.Commands
     /// <summary>
     /// Validate customer register input
     /// </summary>
-    internal class ValidateRegisterCustomerCommand : AbstractValidator<RegisterCustomerCommand>
+    internal class ValidateRegisterCustomerCommand : AbstractValidator<RegisterCommand>
     {
         public ValidateRegisterCustomerCommand()
         {
@@ -70,7 +75,7 @@ namespace VehicleAssist.Application.Authentication.Commands
     /// <summary>
     /// Checks if user already registered. If they aren't registers them to the database
     /// </summary>
-    internal class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCommand, RegisterCustomerCommandResult>
+    internal class RegisterCustomerCommandHandler : IRequestHandler<RegisterCommand, RegisterCustomerCommandResult>
     {
 
         //Injection
@@ -91,7 +96,7 @@ namespace VehicleAssist.Application.Authentication.Commands
 
 
         //Handle
-        public async Task<RegisterCustomerCommandResult> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterCustomerCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             
 
@@ -105,16 +110,29 @@ namespace VehicleAssist.Application.Authentication.Commands
          
             string hashedPassword = _passwordHasher.HashPassword(request.Password);
 
-            Customer addingMember = Customer.CreateCustomerFromRegisterData(request.UserName,request.FirstName,request.LastName,request.Email,request.PhoneNumber,hashedPassword);
+            string message;
+            if (request.IsCompany)
+            {
+                message = "Registered Company";
+                 member = Company.CreateCompanyFromRegisterData(request.UserName, request.FirstName, request.LastName, request.Email, request.PhoneNumber, hashedPassword,request.CompanyName,request.CompanyDescription);
+            }
+            else
+            {
+                message = "Registered Customer";
 
-            _memberRepository.Add(addingMember);
+                member = Customer.CreateCustomerFromRegisterData(request.UserName,request.FirstName,request.LastName,request.Email,request.PhoneNumber,hashedPassword);
+
+            }
+
+
+            _memberRepository.Add(member);
             _unitOfWork.CommitChanges();
 
 
          
             return new RegisterCustomerCommandResult()
             {
-           
+                Message = message,
                
             };
         }
@@ -126,7 +144,7 @@ namespace VehicleAssist.Application.Authentication.Commands
     public record RegisterCustomerCommandResult
     {
       
-
+        public string Message { get; set; }
         
 
     }

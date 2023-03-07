@@ -57,7 +57,7 @@ namespace VehicleAssist.API.Controllers
 
 
             //Custom mapping (more control)
-            RegisterCustomerCommand command = new RegisterCustomerCommand()
+            RegisterCommand command = new RegisterCommand()
             {
                 ConfirmPassword = request.ConfirmPassword,
                 UserName = request.UserName,
@@ -66,13 +66,14 @@ namespace VehicleAssist.API.Controllers
                 LastName = request.LastName,
                 Password = request.Password,
                 PhoneNumber = request.PhoneNumber,
+                IsCompany = false
             };
            
 
             try
             {
                 RegisterCustomerCommandResult result = await _mediator.Send(command);
-                return Ok();
+                return new JsonResult(result);
 
 
             } // Catch a summarized exception
@@ -94,6 +95,104 @@ namespace VehicleAssist.API.Controllers
 
         }
 
+        [HttpPost("auth/local/[action]")]
+        public async Task<IActionResult> RegisterCompany(CompanyRegisterRequest request)
+        {
+
+            if (request == null) return BadRequest();
+
+            
+
+
+            //Custom mapping (more control)
+            RegisterCommand command = new RegisterCommand()
+            {
+                ConfirmPassword = request.ConfirmPassword,
+                UserName = request.UserName,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Password = request.Password,
+                PhoneNumber = request.PhoneNumber,
+                CompanyDescription = request.CompanyDescription,
+                CompanyName = request.CompanyName,
+                IsCompany = true
+            };
+
+
+            try
+            {
+                RegisterCustomerCommandResult result = await _mediator.Send(command);
+                return new JsonResult(result);
+
+
+            } // Catch a summarized exception
+            catch (AbstractDomainException ex)
+            {
+                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
+                //IN A CONSUMABLE FORMAT
+
+                Dictionary<string, string> errors = new Dictionary<string, string>();
+
+                errors.Add("ErrorName", ex.ExceptionName);
+                errors.Add("Message", ex.Message);
+
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet("auth/local/[action]")]
+        public async Task<IActionResult> Activate(CompanyRegisterRequest request)
+        {
+
+            if (request == null) return BadRequest();
+
+            RegisterCommand command = new RegisterCommand()
+            {
+                ConfirmPassword = request.ConfirmPassword,
+                UserName = request.UserName,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Password = request.Password,
+                PhoneNumber = request.PhoneNumber,
+                CompanyDescription = request.CompanyDescription,
+                CompanyName = request.CompanyName,
+                IsCompany = true
+            };
+
+
+            try
+            {
+                RegisterCustomerCommandResult result = await _mediator.Send(command);
+                return Ok();
+
+
+            } // Catch a summarized exception
+            catch (AbstractDomainException ex)
+            {
+                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
+                //IN A CONSUMABLE FORMAT
+
+                Dictionary<string, string> errors = new Dictionary<string, string>();
+
+                errors.Add("ErrorName", ex.ExceptionName);
+                errors.Add("Message", ex.Message);
+
+                return BadRequest(errors);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
 
     }
 }

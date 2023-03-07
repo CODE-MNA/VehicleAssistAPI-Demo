@@ -29,7 +29,7 @@ namespace VehicleAssist.Infrastructure.Authentication
         public Member? FindMemberByEmail(string email)
         {
 
-            List<Member> members = _dbContext.Members.Where(m => m.UserName == email).ToList();
+            List<Member> members = _dbContext.Members.Where(m => m.Email == email).ToList();
 
 
             return members.FirstOrDefault(defaultValue: null);
