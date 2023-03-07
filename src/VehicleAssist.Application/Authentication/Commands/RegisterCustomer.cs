@@ -77,6 +77,8 @@ namespace VehicleAssist.Application.Authentication.Commands
         IMemberRepository _memberRepository;
         IUnitOfWork _unitOfWork;
         IPasswordHasher _passwordHasher;
+
+
         public RegisterCustomerCommandHandler(IMemberRepository memberRepository, IUnitOfWork unitOfWork, IPasswordHasher hasher)
         {
             _memberRepository = memberRepository;
@@ -128,8 +130,7 @@ namespace VehicleAssist.Application.Authentication.Commands
     {
       
 
-        //TEMP
-        public List<Member> AllMembers { get; set; }
+        
 
     }
 
