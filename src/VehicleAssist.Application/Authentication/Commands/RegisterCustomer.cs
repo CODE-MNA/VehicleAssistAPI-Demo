@@ -95,9 +95,6 @@ namespace VehicleAssist.Application.Authentication.Commands
         {
             
 
-
-
-
             //Check if Email already Exists
             Member? member = _memberRepository.FindMemberByEmail(request.Email);
 

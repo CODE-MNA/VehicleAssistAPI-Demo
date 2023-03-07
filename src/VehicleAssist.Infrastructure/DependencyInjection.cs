@@ -41,8 +41,6 @@ namespace VehicleAssist.Infrastructure
         #endregion  
 
 
-        
-
 
         public static IServiceCollection AddInfrastructure (this IServiceCollection services,IConfiguration configuration)
         {
@@ -64,7 +62,7 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<VehicleAssistDBContext>());
 
             services.AddScoped<IMemberRepository, MemberRepository>();
-            services.AddScoped<IPasswordHasher,MockPasswordHasher>();
+            services.AddScoped<IPasswordHasher,PasswordHasher>();
 
 
             return services;

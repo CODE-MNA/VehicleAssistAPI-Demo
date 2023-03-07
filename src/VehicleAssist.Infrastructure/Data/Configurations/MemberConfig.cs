@@ -18,7 +18,7 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
             builder.HasDiscriminator(b=>b.MemberType);
             
             builder.Property(m => m.UserName).HasColumnType("varchar(50)");
-            builder.Property(m => m.PasswordHash).HasColumnType("varchar(50)");
+            builder.Property(m => m.PasswordHash).HasColumnType("varchar(60)");
 
             builder.Property(m => m.FirstName).HasColumnType("varchar(100)");
             builder.Property(m => m.LastName).HasColumnType("varchar(50)");

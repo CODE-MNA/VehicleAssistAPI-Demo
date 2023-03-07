@@ -25,7 +25,10 @@ namespace VehicleAssist.Infrastructure.Temporary
         }
 
 
-      
+        public Member FindMemberByUsername(string username)
+        {
+            return Members.Where(x => username == x.UserName).FirstOrDefault();
+        }
 
         public Member FindMemberByEmail(string email)
         {

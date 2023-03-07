@@ -28,7 +28,7 @@ namespace VehicleAssist.API.Controllers
 
             LoginQuery query = new LoginQuery()
             {
-                email = request.email,
+                username = request.username,
                 password = request.password,
             };
 

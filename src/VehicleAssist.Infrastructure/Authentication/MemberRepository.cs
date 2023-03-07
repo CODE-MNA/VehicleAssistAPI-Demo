@@ -15,13 +15,24 @@ namespace VehicleAssist.Infrastructure.Authentication
         {
         }
 
-        public Member? FindMemberByEmail(string email)
+        public Member? FindMemberByUsername(string username)
         {
         
-                List<Member> members =  _dbContext.Members.Where(m => m.Email == email).ToList();
+                List<Member> members =  _dbContext.Members.Where(m => m.UserName == username).ToList();
        
             
             return members.FirstOrDefault(defaultValue:null);
+
+        }
+
+
+        public Member? FindMemberByEmail(string email)
+        {
+
+            List<Member> members = _dbContext.Members.Where(m => m.UserName == email).ToList();
+
+
+            return members.FirstOrDefault(defaultValue: null);
 
         }
     }

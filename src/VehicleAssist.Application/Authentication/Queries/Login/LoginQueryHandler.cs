@@ -24,20 +24,19 @@ namespace VehicleAssist.Application.Authentication.Queries
         {
 
             //Find if email exists
-            Member member = _memberRepository.FindMemberByEmail(request.email);
+            Member member = _memberRepository.FindMemberByUsername(request.username);
 
 
 
             if(member == null)
             {
                 //throw exception ?
-                throw new LoginEmailNotFoundException("Email Doesn't Exist");
+                throw new LoginEmailNotFoundException("Username doesn't exist");
             }
+
 
             //ADD ROLES
             if (!member.UserActivated) throw new LoginUserNotActivatedException("User not activated");
-
-
 
 
             if (_passwordHasher.VerifyPassword(member.PasswordHash,request.password))

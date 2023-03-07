@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Authentication.Interfaces;
+using BC = BCrypt.Net.BCrypt;
 
 namespace VehicleAssist.Infrastructure.Authentication
 {
@@ -11,12 +12,15 @@ namespace VehicleAssist.Infrastructure.Authentication
     {
         public string HashPassword(string password)
         {
-            throw new NotImplementedException();
+            string hashedPassword = BC.HashPassword(password);
+
+            return hashedPassword;
+
         }
 
         public bool VerifyPassword(string hash,string password)
         {
-            throw new NotImplementedException();
+            return BC.Verify(password, hash);
         }
     }
 }
