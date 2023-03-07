@@ -8,11 +8,6 @@ namespace VehicleAssist.Domain
 {
     public abstract class BaseEntity
     {
-        protected int _id;
-
-        
-
-
-        public int Id { get { return _id; } set { _id = value; } }
+  
     }
 }

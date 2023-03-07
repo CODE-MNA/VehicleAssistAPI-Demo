@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
@@ -19,6 +20,11 @@ namespace VehicleAssist.Infrastructure.Temporary
            _list.Add(entity);
         }
 
+        public void Delete(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteById(object id)
         {
            T obj = GetById(id);
@@ -27,9 +33,9 @@ namespace VehicleAssist.Infrastructure.Temporary
 
         }
 
-        public T GetById(object id)
+        public virtual T GetById(object id)
         {
-            return _list.Where((T x )=> x.Id == (int)id).First();
+            return _list[(int)id];
         }
 
         public IEnumerable<T> GetList()
@@ -37,12 +43,14 @@ namespace VehicleAssist.Infrastructure.Temporary
             return _list.AsReadOnly();
         }
 
+        public ICollection<T> GetList(Expression<Func<T, bool>>? expression = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(T entity)
         {
-            int entityID = entity.Id;
-            DeleteById(entityID);
-
-            Add(entity);
+            throw new NotImplementedException();
         }
     }
 }

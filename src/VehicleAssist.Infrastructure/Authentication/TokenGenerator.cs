@@ -25,7 +25,7 @@ namespace VehicleAssist.Infrastructure.Authentication
         public string GenerateToken(Member member)
         {
             string email = member.Email;
-            string userID = member.MemberID.ToString();
+            string userID = member.MemberId.ToString();
          
             List<Claim> claims = new List<Claim>();
 

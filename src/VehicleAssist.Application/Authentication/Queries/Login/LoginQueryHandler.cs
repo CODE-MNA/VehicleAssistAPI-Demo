@@ -24,18 +24,18 @@ namespace VehicleAssist.Application.Authentication.Queries
         {
 
             //Find if email exists
-            Member member = _memberRepository.GetMemberByEmail(request.email);
+            Member member = _memberRepository.FindMemberByEmail(request.email);
 
 
 
             if(member == null)
             {
                 //throw exception ?
-                throw new ArgumentException("Email Doesn't Exist");
+                throw new LoginEmailNotFoundException("Email Doesn't Exist");
             }
 
             //ADD ROLES
-            if (!member.UserActivated) throw new ArgumentException("User not activated");
+            if (!member.UserActivated) throw new LoginUserNotActivatedException("User not activated");
 
 
 
@@ -46,7 +46,7 @@ namespace VehicleAssist.Application.Authentication.Queries
 
                 LoginQueryResult result = new LoginQueryResult()
                 {
-                    userId = member.MemberID,
+                    userId = member.MemberId,
                     token = _tokenGenerator.GenerateToken(member)
 
                 };
@@ -57,7 +57,7 @@ namespace VehicleAssist.Application.Authentication.Queries
             }
             else
             {
-                throw new Exception("Wrong auth!");
+                throw new InvalidLoginCredentialsException("Wrong auth!");
             }
 
         }

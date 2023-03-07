@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VehicleAssist.Domain.Reminders
 {
-    internal class Reminder
+    public class Reminder
     {
         public int ReminderId { get; private set; }
 

@@ -12,7 +12,7 @@ namespace VehicleAssist.Infrastructure.Temporary
     {
         public string GenerateToken(Member member)
         {
-            int userID = member.MemberID;
+            int userID = member.MemberId;
                 string email = member.Email;
             StringBuilder sb = new StringBuilder();
 

@@ -10,7 +10,7 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddApplication();
 
 //Infra Layer
-builder.Services.AddTemporaryInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 
 

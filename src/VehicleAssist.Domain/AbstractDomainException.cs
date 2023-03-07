@@ -8,6 +8,14 @@ namespace VehicleAssist.Domain
 {
     public class AbstractDomainException : Exception
     {
+        public string ExceptionName
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
         public AbstractDomainException(string exception) : base(exception)
         {
 

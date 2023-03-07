@@ -11,5 +11,54 @@ namespace VehicleAssist.Domain.Company
         public string CompanyName { get; set; }
 
         public string? CompanyDescription { get; set; }
+
+        protected static Company CreateCompanyFromRegisterData(string username, string firstName, string lastName,
+          string email, string phoneNumber, string passwordHash,string companyName, string? companyDescription = null)
+        {
+          Member.Member member = CreateMemberFromRegisterData(username, firstName, lastName, email, phoneNumber, passwordHash);
+                
+                Company company = ConvertFromMember(member);
+
+                company.CompanyName = companyName;
+                company.CompanyDescription= companyDescription;
+
+            return company;
+
+
+            //Customer
+
+
+            //Company
+            //extra
+
+
+
+        }
+
+        public static Company ConvertFromMember(Member.Member member)
+        {
+
+
+
+            Company company = new Company()
+            {
+                MemberId = member.MemberId,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                Email = member.Email,
+                PasswordHash = member.PasswordHash,
+                CellPhoneNumber = member.CellPhoneNumber,
+                HomePhoneNumber = member.HomePhoneNumber,
+                UserName = member.UserName,
+                UserActivatedDate = member.UserActivatedDate,
+                UserActivated = member.UserActivated,
+
+
+
+            };
+
+            return company;
+        }
+
     }
 }

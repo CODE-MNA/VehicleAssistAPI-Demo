@@ -22,6 +22,8 @@ namespace VehicleAssist.Domain.Customer
         public string? ImageLink { get; private set; }
 
 
+        public int CustomerId { get; set; }
+        public Customer? Customer { get; private set; }
 
 
     }

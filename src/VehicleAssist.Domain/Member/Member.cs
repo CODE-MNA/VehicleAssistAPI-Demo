@@ -8,18 +8,46 @@ namespace VehicleAssist.Domain.Member
 {
     public class Member : BaseEntity
     {
-        public Member()
+       public int MemberId { get; protected set; }
+
+        public string FirstName { get; protected set; }
+        public string LastName { get; protected set; }
+
+        public string CellPhoneNumber { get; protected set; }
+
+        public string? HomePhoneNumber { get; protected set; }
+
+        public string Email { get; protected set; }
+
+        public string UserName { get; protected set; }
+        public string PasswordHash { get; protected set; }
+
+        public bool UserActivated { get; protected set; }
+
+        public DateTime? UserActivatedDate { get; protected set; }
+        
+        protected Member()
         {
           
         }
 
-        public static Member CreateMemberFromRegisterData(string firstName, string lastName, string email, string passwordHash)
+
+
+    
+
+        protected static Member CreateMemberFromRegisterData(string username,string firstName, string lastName,
+            string email, string phoneNumber, string passwordHash) 
         {
-            Member member = new Member();
+
+          
+
+            Member member = new();
             member.FirstName = firstName;
             member.LastName = lastName;
             member.Email = email;
             member.PasswordHash = passwordHash;
+            member.UserName = username;
+            member.CellPhoneNumber = phoneNumber;
 
             //Member is instantiated as inactive
             member.UserActivated = false;
@@ -28,12 +56,7 @@ namespace VehicleAssist.Domain.Member
             return member;
 
 
-            //Customer
- 
-
-            //Company
-            //extra
-
+           
 
 
         }
@@ -47,23 +70,7 @@ namespace VehicleAssist.Domain.Member
 
         }
              
-
-        public int MemberID { get => Id; set
-            {
-                Id = value;
-            } }
-
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-
-        public string PhoneNumber { get; private set; }
-        public string Email { get; private set; }
-
-        public string PasswordHash { get; private set; }
-
-        public bool UserActivated { get; private set; }
-
-        public DateTime? UserActivatedDate { get; private set; }
+        
 
     }
 }

@@ -5,6 +5,7 @@ using VehicleAssist.APIContracts;
 using VehicleAssist.Application.Authentication;
 using VehicleAssist.Application.Authentication.Commands;
 using VehicleAssist.Application.Authentication.Queries;
+using VehicleAssist.Domain;
 
 namespace VehicleAssist.API.Controllers
 {
@@ -49,40 +50,50 @@ namespace VehicleAssist.API.Controllers
         }
 
         [HttpPost("auth/local/[action]")]
-        public async Task<IActionResult> Register(RegisterRequest request)
+        public async Task<IActionResult> Register(CustomerRegisterRequest request)
         {
             
             if (request == null) return BadRequest();
 
-            RegisterCommand command = new RegisterCommand(request.Name,
-                request.Email,request.PhoneNumber,
-                request.Password,request.ConfirmPassword);
+
+            //Custom mapping (more control)
+            RegisterCustomerCommand command = new RegisterCustomerCommand()
+            {
+                ConfirmPassword = request.ConfirmPassword,
+                UserName = request.UserName,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Password = request.Password,
+                PhoneNumber = request.PhoneNumber,
+            };
            
 
             try
             {
-                RegisterCommandResult result = await _mediator.Send(command);
-                return new JsonResult(result);
+                RegisterCustomerCommandResult result = await _mediator.Send(command);
+                return Ok();
 
 
-            }
-            catch (Exception ex)
+            } // Catch a summarized exception
+            catch (AbstractDomainException ex)
             {
                 //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
                 //IN A CONSUMABLE FORMAT
 
+                Dictionary<string, string> errors = new Dictionary<string, string>();
+
+                errors.Add("ErrorName", ex.ExceptionName);
+                errors.Add("Message",ex.Message);
+
+                return BadRequest(errors);
+            }catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
 
         }
 
-        // Register
 
-        //request model
-
-        //Route
-
-        //result model
-        
     }
 }

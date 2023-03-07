@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
@@ -11,31 +12,42 @@ namespace VehicleAssist.Infrastructure.Data
     public class EFRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
 
-        
+        protected readonly VehicleAssistDBContext _dbContext;
+
+        public EFRepository(VehicleAssistDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+                _dbContext.Set<T>().Add(entity);
         }
 
-        public void DeleteById(object id)
+        public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(entity);
         }
 
         public T GetById(object id)
         {
-            throw new NotImplementedException();
+          return _dbContext.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetList()
+      
+        public ICollection<T> GetList(Expression<Func<T, bool>>? expression)
         {
-            throw new NotImplementedException();
+            if(expression == null)
+            {
+                return _dbContext.Set<T>().ToList().AsReadOnly();
+            }
+
+            return _dbContext.Set<T>().Where(expression).ToList().AsReadOnly();
         }
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Update(entity);
         }
     }
 }

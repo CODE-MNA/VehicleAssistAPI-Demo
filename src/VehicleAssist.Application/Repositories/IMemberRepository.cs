@@ -10,8 +10,6 @@ namespace VehicleAssist.Application.Repositories
 {
     public interface IMemberRepository : IBaseRepository<Member>
     {
-        public Member GetMemberByID(int id);
-
-        public Member GetMemberByEmail(string email);
+        public Member? FindMemberByEmail(string email);
     }
 }

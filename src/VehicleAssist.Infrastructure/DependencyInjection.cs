@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using VehicleAssist.Infrastructure.Authentication;
 using VehicleAssist.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -25,6 +26,8 @@ namespace VehicleAssist.Infrastructure
 
             services.AddScoped<IMemberRepository, FakeMemberRepository>();
             services.AddScoped<IUnitOfWork,TempUoW>();
+
+
 
 
 
@@ -44,7 +47,25 @@ namespace VehicleAssist.Infrastructure
         public static IServiceCollection AddInfrastructure (this IServiceCollection services,IConfiguration configuration)
         {
             services.AddAuth(configuration);
-            
+
+
+            string CONN_STRING_NAME = "VehicleAssistDBContext";
+
+
+            services.AddDbContext<VehicleAssistDBContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString(CONN_STRING_NAME), (sqlServerOptions) =>
+                {
+                    sqlServerOptions.EnableRetryOnFailure();
+                    sqlServerOptions.CommandTimeout(20);
+                });
+            });
+
+            services.AddScoped<IUnitOfWork>(provider => provider.GetService<VehicleAssistDBContext>());
+
+            services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<IPasswordHasher,MockPasswordHasher>();
+
 
             return services;
             
