@@ -147,30 +147,17 @@ namespace VehicleAssist.API.Controllers
         }
 
 
-        [HttpGet("auth/local/[action]")]
-        public async Task<IActionResult> Activate(CompanyRegisterRequest request)
+        [HttpGet("auth/local/[action]/[token]")]
+        public async Task<IActionResult> Activate(string token)
         {
 
             if (request == null) return BadRequest();
 
-            RegisterCommand command = new RegisterCommand()
-            {
-                ConfirmPassword = request.ConfirmPassword,
-                UserName = request.UserName,
-                Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Password = request.Password,
-                PhoneNumber = request.PhoneNumber,
-                CompanyDescription = request.CompanyDescription,
-                CompanyName = request.CompanyName,
-                IsCompany = true
-            };
-
+            
 
             try
             {
-                RegisterCustomerCommandResult result = await _mediator.Send(command);
+                RegisterCustomerCommandResult result = await _mediator.Send();
                 return Ok();
 
 

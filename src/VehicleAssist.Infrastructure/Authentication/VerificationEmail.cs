@@ -37,12 +37,18 @@ namespace VehicleAssist.Infrastructure.Authentication
             parameters.Add("Username", member.UserName);
 
 
-            string link = GenerateLink(member); 
+            string link = GenerateLink(member);
 
             parameters.Add("Link",link);
-            mailRequest.Arguments = parameters;
 
-            mailRequest.BodyRazorTemplate = $"Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
+            object newModel = new
+            {
+                Username = parameters["Username"],
+                Link = parameters["Link"],
+            };
+            mailRequest.Arguments = newModel;
+
+            mailRequest.BodyRazorTemplate = @"Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
 
             try
             {
