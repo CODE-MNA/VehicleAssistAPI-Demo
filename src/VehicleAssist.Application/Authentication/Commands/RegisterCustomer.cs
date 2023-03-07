@@ -83,12 +83,15 @@ namespace VehicleAssist.Application.Authentication.Commands
         IUnitOfWork _unitOfWork;
         IPasswordHasher _passwordHasher;
 
+        IVerificationEmail _verificationEmailSender;
 
-        public RegisterCustomerCommandHandler(IMemberRepository memberRepository, IUnitOfWork unitOfWork, IPasswordHasher hasher)
+
+        public RegisterCustomerCommandHandler(IVerificationEmail emailSender,IMemberRepository memberRepository, IUnitOfWork unitOfWork, IPasswordHasher hasher)
         {
             _memberRepository = memberRepository;
             _unitOfWork = unitOfWork;
             _passwordHasher = hasher;
+            _verificationEmailSender = emailSender;
         }
 
 
@@ -101,7 +104,7 @@ namespace VehicleAssist.Application.Authentication.Commands
             
 
             //Check if Email already Exists
-            Member? member = _memberRepository.FindMemberByEmail(request.Email);
+            Member? member = _memberRepository.FindMemberByEmail<Member>(request.Email);
 
             if(member != null)
             {
@@ -127,7 +130,8 @@ namespace VehicleAssist.Application.Authentication.Commands
 
             _memberRepository.Add(member);
             _unitOfWork.CommitChanges();
-
+            _verificationEmailSender.SendVerificationEmail(member);
+            
 
          
             return new RegisterCustomerCommandResult()

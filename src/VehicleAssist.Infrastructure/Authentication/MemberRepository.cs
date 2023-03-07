@@ -16,26 +16,38 @@ namespace VehicleAssist.Infrastructure.Authentication
         {
         }
 
-        public Member? FindMemberByUsername(string username)
+        public T? FindMemberByUsername<T>(string username) where T : Member
         {
         
-                List<Member> members =  _dbContext.Members.Where(m => m.UserName == username).ToList();
+
+                List<T> members =  _dbContext.Set<T>().Where(m => m.UserName == username).ToList();
        
+
+            
+
+
             
             return members.FirstOrDefault(defaultValue:null);
 
         }
 
+        public Company? GetCompanyData(int id)
+        {
+           return _dbContext.Companies.Find(id);
+        }
 
-        public Member? FindMemberByEmail(string email)
+        public T? FindMemberByEmail<T>(string email) where T : Member
         {
 
-            List<Member> members = _dbContext.Members.Where(m => m.Email == email).ToList();
+            List<T> members = _dbContext.Set<T>().Where(m => m.Email == email).ToList();
 
 
             return members.FirstOrDefault(defaultValue: null);
 
         }
+
+
+        
 
     }
 }

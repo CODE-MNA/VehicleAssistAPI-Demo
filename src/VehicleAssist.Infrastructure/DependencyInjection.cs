@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using VehicleAssist.Infrastructure.Authentication;
 using VehicleAssist.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using VehicleAssist.Infrastructure.Email;
+using System.Net.Mail;
+using System.Net;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -45,7 +48,7 @@ namespace VehicleAssist.Infrastructure
         public static IServiceCollection AddInfrastructure (this IServiceCollection services,IConfiguration configuration)
         {
             services.AddAuth(configuration);
-
+            services.AddMailing(configuration);
 
             string CONN_STRING_NAME = "VehicleAssistDBContext";
 
@@ -64,9 +67,37 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IPasswordHasher,PasswordHasher>();
 
-
+            services.AddScoped<IVerificationEmail, VerificationEmail>();
             return services;
             
+        }
+
+        public static IServiceCollection AddMailing(this IServiceCollection services,IConfiguration configuration)
+        {
+            MailSettings settings = new MailSettings();
+
+            configuration.GetSection(settings.ConfigSectionName).Bind(settings);
+
+            services.AddSingleton(Options.Create(settings));
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com")
+            {
+             
+                Port = 587,
+                EnableSsl = true,
+                Credentials = new NetworkCredential(settings.FromEmail,settings.FromPass)
+                
+            };
+         
+
+
+            services.AddFluentEmail(settings.FromEmail)
+                .AddSmtpSender(client)
+                .AddRazorRenderer();
+
+            services.AddScoped<IMailService, MailService>();
+
+            return services;
         }
 
 

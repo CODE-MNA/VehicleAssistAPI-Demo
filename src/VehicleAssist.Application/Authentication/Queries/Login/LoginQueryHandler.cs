@@ -27,7 +27,7 @@ namespace VehicleAssist.Application.Authentication.Queries
         {
 
             //Find if username exists
-            Member? member = _memberRepository.FindMemberByUsername(request.username);
+            Member? member = _memberRepository.FindMemberByUsername<Member>(request.username);
 
 
             if (member == null)
@@ -41,10 +41,11 @@ namespace VehicleAssist.Application.Authentication.Queries
             if (!member.UserActivated) throw new LoginUserNotActivatedException("User not activated");
 
 
-
+            
 
             if (_passwordHasher.VerifyPassword(member.PasswordHash, request.password))
             {
+                
 
                 LoginQueryResult result = new LoginQueryResult()
                 {
@@ -61,10 +62,19 @@ namespace VehicleAssist.Application.Authentication.Queries
                     CellPhoneNumber = member.CellPhoneNumber,
 
                     MemberType = member.MemberType,
+
+                    
                 };
 
 
                 result.IsCompany = member.MemberType == "Company";
+
+                if (result.IsCompany)
+                {
+                    Company company = _memberRepository.GetCompanyData(member.MemberId);
+                    result.CompanyName = company.CompanyName;
+                    result.CompanyDescription = company.CompanyDescription;
+                }
                 return result;
 
             }

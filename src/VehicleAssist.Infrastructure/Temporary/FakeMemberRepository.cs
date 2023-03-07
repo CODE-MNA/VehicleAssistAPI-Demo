@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
+using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Member;
 
 namespace VehicleAssist.Infrastructure.Temporary
@@ -33,6 +34,21 @@ namespace VehicleAssist.Infrastructure.Temporary
         public Member FindMemberByEmail(string email)
         {
             return Members.Where(x => email == x.Email).FirstOrDefault();
+        }
+
+        public T? FindMemberByUsername<T>(string username) where T : Member
+        {
+            throw new NotImplementedException();
+        }
+
+        public Company GetCompanyData(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T? FindMemberByEmail<T>(string email) where T : Member
+        {
+            throw new NotImplementedException();
         }
     }
 }

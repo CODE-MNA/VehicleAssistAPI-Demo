@@ -10,6 +10,6 @@ namespace VehicleAssist.Application.Authentication.Interfaces
     public interface IVerificationEmail
     {
 
-        public void SendVerificationEmail(Member member);
+        public  void SendVerificationEmail(Member member);
     }
 }
