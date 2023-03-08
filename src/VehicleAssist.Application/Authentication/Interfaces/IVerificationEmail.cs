@@ -11,5 +11,9 @@ namespace VehicleAssist.Application.Authentication.Interfaces
     {
 
         public  void SendVerificationEmail(Member member);
+
+        
+
+        public int VerifyActivationToken(string token);
     }
 }

@@ -147,17 +147,21 @@ namespace VehicleAssist.API.Controllers
         }
 
 
-        [HttpGet("auth/local/[action]/[token]")]
+        [HttpGet("auth/local/[action]/{token}")]
         public async Task<IActionResult> Activate(string token)
         {
 
-            if (request == null) return BadRequest();
+            if (token == null) return BadRequest();
 
-            
+
+            ActivateCustomerCommand request = new ActivateCustomerCommand()
+            {
+                Token = token
+            };
 
             try
             {
-                RegisterCustomerCommandResult result = await _mediator.Send();
+                 await _mediator.Send(request);
                 return Ok();
 
 

@@ -38,6 +38,7 @@ namespace VehicleAssist.Infrastructure.Authentication
 
 
             string link = GenerateLink(member);
+            
 
             parameters.Add("Link",link);
 
@@ -84,11 +85,32 @@ namespace VehicleAssist.Infrastructure.Authentication
 
            JwtHeader header=  new JwtHeader(signer);
             JwtPayload payload = new JwtPayload(claims);
-
+            
+            string baseUrl = _mailSettings.BaseUrl;
 
             var tokenString =  new JwtSecurityTokenHandler().WriteToken(new JwtSecurityToken(header,payload));
 
-            return "http://localhost:8080/auth/local/activate/" + tokenString;
+            return $"{baseUrl}/auth/local/Activate/" + tokenString;
+        }
+
+        public  int VerifyActivationToken(string token)
+        {
+
+            try
+            {
+             var result = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+
+
+                return int.Parse(result.Subject);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occured when verifying activation token.\n" + ex.Message);
+            }
+
+          
         }
     }
 }
