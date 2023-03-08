@@ -63,6 +63,7 @@ namespace VehicleAssist.Application.Authentication.Queries
 
                     MemberType = member.MemberType,
 
+                    Username = member.UserName
                     
                 };
 
