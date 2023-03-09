@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -26,12 +26,27 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    //dev
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(x =>
+    {
+        x.AllowAnyOrigin();
+        x.AllowAnyHeader();
+        
+    });
+
+}
+else
+{
+    //prod
+    app.UseHttpsRedirection();
+
+
 }
 
-app.UseCertificateForwarding();
-app.UseHttpsRedirection();
+
+
 
 //Todo : Add Authentication
 app.UseAuthorization();

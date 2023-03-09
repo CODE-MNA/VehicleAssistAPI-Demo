@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,23 @@ namespace VehicleAssist.Infrastructure.Authentication
     {
         IMailService _mailService;
         MailSettings _mailSettings;
+        IHttpContextAccessor _urlAccessor;
+        private const string verifyRoute = "auth/local/Activate";
 
-        public VerificationEmail(IMailService mailService, IOptions<MailSettings> mailSettings)
+
+        public VerificationEmail(IHttpContextAccessor httpContextAccessor,IMailService mailService, IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;
             _mailService = mailService;
+            _urlAccessor = httpContextAccessor;
         }
 
         public async void SendVerificationEmail(Member member)
         {
-            MailRequest mailRequest = new MailRequest();
+
+            try
+            {
+                MailRequest mailRequest = new MailRequest();
 
             mailRequest.ToEmail = member.Email;
 
@@ -51,8 +59,6 @@ namespace VehicleAssist.Infrastructure.Authentication
 
             mailRequest.BodyRazorTemplate = @"Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
 
-            try
-            {
           await  _mailService.SendMailAsync(mailRequest);
 
             }catch (Exception ex)
@@ -85,12 +91,15 @@ namespace VehicleAssist.Infrastructure.Authentication
 
            JwtHeader header=  new JwtHeader(signer);
             JwtPayload payload = new JwtPayload(claims);
-            
-            string baseUrl = _mailSettings.BaseUrl;
+
+
+            //Use the request to get the host url
+            var req = _urlAccessor.HttpContext.Request;
+            string baseUrl = $"{req.Scheme}://{req.Host}";
 
             var tokenString =  new JwtSecurityTokenHandler().WriteToken(new JwtSecurityToken(header,payload));
 
-            return $"{baseUrl}/auth/local/Activate/" + tokenString;
+            return $"{baseUrl}/{verifyRoute}" + tokenString;
         }
 
         public  int VerifyActivationToken(string token)

@@ -10,8 +10,9 @@ namespace VehicleAssist.Infrastructure.Email
     {
         public string ConfigSectionName = "MailSettings";
 
-        //Move to another options class later
-       public string BaseUrl { get; set; }
+        public string SmtpServer { get; set; }
+
+        public int SmtpPort { get; set; }
 
         public string FromEmail { get; set; }
 

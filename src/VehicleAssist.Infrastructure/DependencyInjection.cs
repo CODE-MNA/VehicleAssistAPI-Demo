@@ -72,18 +72,22 @@ namespace VehicleAssist.Infrastructure
             
         }
 
+    
+
         public static IServiceCollection AddMailing(this IServiceCollection services,IConfiguration configuration)
         {
             MailSettings settings = new MailSettings();
 
             configuration.GetSection(settings.ConfigSectionName).Bind(settings);
 
+            
+         
             services.AddSingleton(Options.Create(settings));
 
-            SmtpClient client = new SmtpClient("smtp.gmail.com")
+            SmtpClient client = new SmtpClient(settings.SmtpServer)
             {
              
-                Port = 587,
+                Port = settings.SmtpPort,
                 EnableSsl = true,
                 Credentials = new NetworkCredential(settings.FromEmail,settings.FromPass)
                 
