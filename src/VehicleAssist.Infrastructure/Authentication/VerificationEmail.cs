@@ -29,7 +29,7 @@ namespace VehicleAssist.Infrastructure.Authentication
             _urlAccessor = httpContextAccessor;
         }
 
-        public async void SendVerificationEmail(Member member)
+        public  void SendVerificationEmail(Member member)
         {
 
             try
@@ -57,9 +57,9 @@ namespace VehicleAssist.Infrastructure.Authentication
             };
             mailRequest.Arguments = newModel;
 
-            mailRequest.BodyRazorTemplate = @"Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
+            mailRequest.BodyRazorTemplate = @"<h1>Vehicle Assist Verification </h1><br>Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
 
-          await  _mailService.SendMailAsync(mailRequest);
+            _mailService.SendMailAsync(mailRequest);
 
             }catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace VehicleAssist.Infrastructure.Authentication
 
             var tokenString =  new JwtSecurityTokenHandler().WriteToken(new JwtSecurityToken(header,payload));
 
-            return $"{baseUrl}/{verifyRoute}" + tokenString;
+            return $"{baseUrl}/{verifyRoute}/" + tokenString;
         }
 
         public  int VerifyActivationToken(string token)
