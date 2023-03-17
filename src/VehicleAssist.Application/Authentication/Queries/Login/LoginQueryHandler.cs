@@ -4,8 +4,9 @@ using VehicleAssist.Application.Authentication.Interfaces;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Member;
+using VehicleAssist.Domain.Member.Exceptions;
 
-namespace VehicleAssist.Application.Authentication.Queries
+namespace VehicleAssist.Application.Authentication.Queries.Login
 {
     internal class LoginQueryHandler : IRequestHandler<LoginQuery, LoginQueryResult>
     {
@@ -41,11 +42,11 @@ namespace VehicleAssist.Application.Authentication.Queries
             if (!member.UserActivated) throw new LoginUserNotActivatedException("User not activated");
 
 
-            
+
 
             if (_passwordHasher.VerifyPassword(member.PasswordHash, request.password))
             {
-                
+
 
                 LoginQueryResult result = new LoginQueryResult()
                 {
@@ -64,7 +65,7 @@ namespace VehicleAssist.Application.Authentication.Queries
                     MemberType = member.MemberType,
 
                     Username = member.UserName
-                    
+
                 };
 
 

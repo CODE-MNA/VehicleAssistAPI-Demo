@@ -15,6 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using VehicleAssist.Infrastructure.Email;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using VehicleAssist.Infrastructure.CustomerServices;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -50,6 +53,19 @@ namespace VehicleAssist.Infrastructure
             services.AddAuth(configuration);
             services.AddMailing(configuration);
 
+            services.AddDatabasePersistence(configuration);
+
+            //Other Services
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IVerificationEmail, VerificationEmail>();
+
+
+            return services;
+
+        }
+
+        private static void AddDatabasePersistence(this IServiceCollection services, IConfiguration configuration)
+        {
             string CONN_STRING_NAME = "VehicleAssistDBContext";
 
 
@@ -65,14 +81,9 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<VehicleAssistDBContext>());
 
             services.AddScoped<IMemberRepository, MemberRepository>();
-            services.AddScoped<IPasswordHasher,PasswordHasher>();
-
-            services.AddScoped<IVerificationEmail, VerificationEmail>();
-            return services;
-            
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
-    
 
         public static IServiceCollection AddMailing(this IServiceCollection services,IConfiguration configuration)
         {
@@ -118,7 +129,21 @@ namespace VehicleAssist.Infrastructure
 
             services.AddScoped<ITokenGenerator, TokenGenerator>();
 
-            
+            services.AddAuthentication(c =>
+            {
+                c.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                c.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(jwt => jwt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = configObject.Issuer,
+                    ValidAudience = configObject.Audience,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configObject.Secret))
+                });
 
 
             return services;

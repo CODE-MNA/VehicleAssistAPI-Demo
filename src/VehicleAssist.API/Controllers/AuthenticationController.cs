@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VehicleAssist.APIContracts;
-using VehicleAssist.Application.Authentication;
 using VehicleAssist.Application.Authentication.Commands;
-using VehicleAssist.Application.Authentication.Queries;
+using VehicleAssist.Application.Authentication.Queries.Login;
 using VehicleAssist.Domain;
 
 namespace VehicleAssist.API.Controllers
@@ -32,21 +31,11 @@ namespace VehicleAssist.API.Controllers
                 password = request.password,
             };
 
-            try
-            {
                 LoginQueryResult result = await _mediator.Send(query);
                 return new JsonResult(result);
 
 
-            }
-            catch (Exception ex)
-            {
-                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
-                //IN A CONSUMABLE FORMAT
-
-                return BadRequest(ex.Message);  
-            }
-
+       
         }
 
         [HttpPost("auth/local/[action]")]
@@ -70,28 +59,10 @@ namespace VehicleAssist.API.Controllers
             };
            
 
-            try
-            {
                 RegisterCustomerCommandResult result = await _mediator.Send(command);
                 return new JsonResult(result);
 
 
-            } // Catch a summarized exception
-            catch (AbstractDomainException ex)
-            {
-                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
-                //IN A CONSUMABLE FORMAT
-
-                Dictionary<string, string> errors = new Dictionary<string, string>();
-
-                errors.Add("ErrorName", ex.ExceptionName);
-                errors.Add("Message",ex.Message);
-
-                return BadRequest(errors);
-            }catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
 
         }
 
@@ -120,29 +91,10 @@ namespace VehicleAssist.API.Controllers
             };
 
 
-            try
-            {
                 RegisterCustomerCommandResult result = await _mediator.Send(command);
                 return new JsonResult(result);
 
 
-            } // Catch a summarized exception
-            catch (AbstractDomainException ex)
-            {
-                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
-                //IN A CONSUMABLE FORMAT
-
-                Dictionary<string, string> errors = new Dictionary<string, string>();
-
-                errors.Add("ErrorName", ex.ExceptionName);
-                errors.Add("Message", ex.Message);
-
-                return BadRequest(errors);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
 
         }
 
@@ -159,29 +111,10 @@ namespace VehicleAssist.API.Controllers
                 Token = token
             };
 
-            try
-            {
+        
                  await _mediator.Send(request);
                 return Ok();
 
-
-            } // Catch a summarized exception
-            catch (AbstractDomainException ex)
-            {
-                //TODO : USE A ERROR HANDLER FUNCTION WHICH TAKES IN DOMAIN EXCEPTION AND RETURNS ERROR
-                //IN A CONSUMABLE FORMAT
-
-                Dictionary<string, string> errors = new Dictionary<string, string>();
-
-                errors.Add("ErrorName", ex.ExceptionName);
-                errors.Add("Message", ex.Message);
-
-                return BadRequest(errors);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
 
         }
 

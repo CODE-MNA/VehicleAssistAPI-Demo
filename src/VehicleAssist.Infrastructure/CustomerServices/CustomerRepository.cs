@@ -7,6 +7,10 @@ using VehicleAssist.Application.Repositories;
 using VehicleAssist.Infrastructure.Data;
 using VehicleAssist.Domain.Customer;
 using Microsoft.EntityFrameworkCore;
+using VehicleAssist.Domain.Reminders;
+using VehicleAssist.Application.Customer.Queries;
+using VehicleAssist.Application.Customer;
+using VehicleAssist.Domain.Appointments;
 
 namespace VehicleAssist.Infrastructure.CustomerServices
 {
@@ -18,15 +22,45 @@ namespace VehicleAssist.Infrastructure.CustomerServices
 
         public ICollection<Vehicle> GetAllVehiclesOfCustomer(int customerMemberId)
         {
-            return _dbContext.Vehicles.Where(v => v.CustomerId == customerMemberId).ToList().AsReadOnly();
+            return _dbContext.Vehicles.AsNoTracking().Where(v => v.CustomerId == customerMemberId).ToList().AsReadOnly();
         }
 
-        public void AddVehicle(int customerMemberId, Vehicle vehicle)
+        public void AddVehicleToCustomer(int customerMemberId, Vehicle vehicle)
         {
             vehicle.CustomerId = customerMemberId;
             _dbContext.Vehicles.Add(vehicle);
         }
 
+
+        public CalendarData? GetCalenderData(int customerMemberId)
+        {
+            Customer customer = _dbContext.Customers.Find(customerMemberId);
+
+            if (customer != null)
+            {
+                _dbContext.Entry(customer).Collection(q => q.Appointments).Load();
+                _dbContext.Entry(customer).Collection(q => q.Reminders).Load();
+
+                return new CalendarData()
+                {
+                    Appointments = customer.Appointments,
+                    Reminders = customer.Reminders
+                };
+            }
+
+            return null;
+
+           
+
+
+        }
+
+        public void AddReminderToCustomer(int customerMemberId, Reminder reminder)
+        {
         
+            reminder.CustomerId = customerMemberId;
+            _dbContext.Reminders.Add(reminder);
+        }
+     
     }
 }

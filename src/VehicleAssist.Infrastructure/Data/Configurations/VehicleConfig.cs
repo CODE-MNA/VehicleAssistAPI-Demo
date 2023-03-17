@@ -6,17 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Domain.Customer;
+using VehicleAssist.Domain.Reminders;
 
 namespace VehicleAssist.Infrastructure.Data.Configurations
 {
-    public class CustomerConfig : IEntityTypeConfiguration<Customer>
+    public class VehicleConfig : IEntityTypeConfiguration<Vehicle>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
-            builder.HasMany(c => c.Vehicles).WithOne(c=>c.Customer).HasForeignKey(v => v.CustomerId);
-
-            builder.HasMany(c=>c.Reminders).WithOne(c => c.Customer).HasForeignKey(v=>v.CustomerId);
-
+           
         }
     }
 }

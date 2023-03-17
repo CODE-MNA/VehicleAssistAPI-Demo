@@ -10,6 +10,7 @@ using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
+using VehicleAssist.Domain.Member.Exceptions;
 
 namespace VehicleAssist.Application.Authentication.Commands
 {
@@ -123,13 +124,15 @@ namespace VehicleAssist.Application.Authentication.Commands
             {
                 message = "Registered Customer";
 
-                member = Customer.CreateCustomerFromRegisterData(request.UserName,request.FirstName,request.LastName,request.Email,request.PhoneNumber,hashedPassword);
+                member = Domain.Customer.Customer.CreateCustomerFromRegisterData(request.UserName,request.FirstName,request.LastName,request.Email,request.PhoneNumber,hashedPassword);
 
             }
 
 
             _memberRepository.Add(member);
             _unitOfWork.CommitChanges();
+
+            
             _verificationEmailSender.SendVerificationEmail(member);
             
 

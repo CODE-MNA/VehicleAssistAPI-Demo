@@ -50,9 +50,9 @@ namespace VehicleAssist.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(VehicleAssistDBContext).Assembly);
 
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

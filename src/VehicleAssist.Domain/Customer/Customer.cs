@@ -12,16 +12,16 @@ namespace VehicleAssist.Domain.Customer
     public class Customer : Member.Member
     {
 
-        public List<Appointment> Appointments { get; private set; }
+        public List<Appointment>? Appointments { get; private set; }
         public List<Vehicle>? Vehicles { get; private set; }
         public List<Reminder>? Reminders { get; private set; }
 
         //appointments
 
         //TODO : Take Parameters in this function
-        public void AddNewVehicle()
+        public void AddNewVehicle(int vehicleId, string name, string? plateNumber, string? description, string? color, int? mileage, string? imageLink)
         {
-            Vehicle vehicle = new Vehicle();
+            Vehicle vehicle = Vehicle.CreateVehicleFromInput( name, plateNumber, description, color, mileage, imageLink, this.MemberId);
 
             Vehicles.Add(vehicle);
         }

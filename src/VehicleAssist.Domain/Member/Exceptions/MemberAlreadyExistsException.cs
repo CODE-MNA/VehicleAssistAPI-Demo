@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VehicleAssist.Domain.Member
+namespace VehicleAssist.Domain.Member.Exceptions
 {
     public class MemberAlreadyExistsException : AbstractDomainException
     {
@@ -12,6 +12,6 @@ namespace VehicleAssist.Domain.Member
         {
         }
 
-        
+
     }
 }

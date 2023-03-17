@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace VehicleAssist.Application.Authentication
+namespace VehicleAssist.Application.Authentication.Queries.Login
 {
     public record LoginQueryResult
     {
@@ -19,7 +19,7 @@ namespace VehicleAssist.Application.Authentication
 
         public string CellPhoneNumber { get; set; }
         public string CompanyName { get; set; }
-        public string CompanyDescription {get;set;}
+        public string CompanyDescription { get; set; }
 
         public string MemberType { get; set; }
 

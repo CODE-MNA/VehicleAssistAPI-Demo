@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VehicleAssist.Application.Authentication.Queries
+namespace VehicleAssist.Application.Authentication.Queries.Login
 {
     public record LoginQuery : IRequest<LoginQueryResult>
     {

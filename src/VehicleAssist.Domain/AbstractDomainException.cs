@@ -8,6 +8,7 @@ namespace VehicleAssist.Domain
 {
     public class AbstractDomainException : Exception
     {
+        public int StatusCode { get; set; } = 400;
         public string ExceptionName
         {
             get

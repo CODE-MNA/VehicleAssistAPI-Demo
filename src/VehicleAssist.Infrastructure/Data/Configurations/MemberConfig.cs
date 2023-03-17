@@ -15,6 +15,7 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Member> builder)
         {
+
             builder.HasDiscriminator(b=>b.MemberType);
             
             builder.Property(m => m.UserName).HasColumnType("varchar(50)");
@@ -32,6 +33,9 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
             builder.Property(b => b.UserActivatedDate).HasColumnType("datetime");
 
             builder.Property(b => b.MemberId).HasColumnName("MemberId");
+
+            
+
             builder.HasKey(m => m.MemberId);
             
         }

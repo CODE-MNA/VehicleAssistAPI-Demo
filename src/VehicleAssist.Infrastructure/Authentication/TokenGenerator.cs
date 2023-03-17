@@ -33,10 +33,9 @@ namespace VehicleAssist.Infrastructure.Authentication
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, userID));
+            claims.Add(new Claim(type:"member_id", userID));
             claims.Add(new Claim(type:"user_activated", value:member.UserActivated.ToString()));
-
-
-
+            claims.Add(new Claim(ClaimTypes.Role, member.MemberType.ToString()));
             //Create signer 
            byte[] keyBytes = Encoding.UTF8.GetBytes(_tokenConfiguration.Secret);
            SymmetricSecurityKey secretKey = new SymmetricSecurityKey(keyBytes);
