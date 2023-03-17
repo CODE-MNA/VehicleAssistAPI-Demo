@@ -5,7 +5,6 @@ using VehicleAssist.API.Extensions;
 using VehicleAssist.APIContracts;
 using VehicleAssist.Application.Customer.Commands;
 using VehicleAssist.Application.Customer.Queries;
-using VehicleAssist.Domain.Customer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -66,6 +65,45 @@ namespace VehicleAssist.API.Controllers
         }
 
 
+        [HttpDelete("vehicles/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> DeleteVehicle(int id)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+
+            int vehicleId = id;
+
+
+            await _mediator.Send(new DeleteVehicleCommand()
+            {
+                VehicleId = vehicleId,
+                CustomerId = possibleCustomerId
+            });
+
+            return Ok();
+
+
+        }
+
+
+        [HttpPut("vehicles/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> UpdateVehicleInformation([FromBody] AddVehicleRequest request)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+
+
+
+           
+
+            return Ok();
+
+
+        }
+
+
         [HttpGet("calendar")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetCalendarData()
@@ -91,7 +129,7 @@ namespace VehicleAssist.API.Controllers
 
 
 
-            var result = await _mediator.Send(new AddReminderForCustomerCommand() 
+            await _mediator.Send(new AddReminderForCustomerCommand() 
             { 
                 CustomerId = possibleCustomerId,
                 ReminderDateTime = request.ReminderDateTime,
@@ -110,36 +148,36 @@ namespace VehicleAssist.API.Controllers
         }
 
 
-        // PUT api/<CustomerController>/vehicle/:id
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Customer")]
+       // // PUT api/<CustomerController>/vehicle/:id
+       // [HttpPut("{id}")]
+       // [Authorize(Roles = "Customer")]
 
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+       // public void Put(int id, [FromBody] string value)
+       // {
+       // }
 
-        // DELETE api/<CustomerController>/vehicle/:id
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Customer")]
-        public void Delete(int id)
-        {
-        }
+       // // DELETE api/<CustomerController>/vehicle/:id
+       // [HttpDelete("{id}")]
+       // [Authorize(Roles = "Customer")]
+       // public void Delete(int id)
+       // {
+       // }
 
 
-       [Authorize]
-        [HttpGet]
-        public IActionResult GetAllCustomerData()
-        {
-            Console.WriteLine(HttpContext.Request.Headers.Authorization);
+       //[Authorize]
+       // [HttpGet]
+       // public IActionResult GetAllCustomerData()
+       // {
+       //     Console.WriteLine(HttpContext.Request.Headers.Authorization);
 
-            foreach (var item in User.Claims)
-            {
-                Console.WriteLine(item.Value);
-            }
+       //     foreach (var item in User.Claims)
+       //     {
+       //         Console.WriteLine(item.Value);
+       //     }
 
-            int possibleCustomer = User.GetMemberIdFromClaimsPrincipal();
+       //     int possibleCustomer = User.GetMemberIdFromClaimsPrincipal();
 
-            return Ok(new { loggedInCustomerId = possibleCustomer });
-        }
+       //     return Ok(new { loggedInCustomerId = possibleCustomer });
+       // }
     }
 }

@@ -18,6 +18,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using VehicleAssist.Infrastructure.CustomerServices;
+using VehicleAssist.Domain.Customer;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -57,7 +58,7 @@ namespace VehicleAssist.Infrastructure
 
             //Other Services
             services.AddScoped<IPasswordHasher, PasswordHasher>();
-            services.AddScoped<IVerificationEmail, VerificationEmail>();
+            services.AddTransient<IVerificationEmail, VerificationEmail>();
 
 
             return services;
@@ -82,6 +83,11 @@ namespace VehicleAssist.Infrastructure
 
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+
+            //Generic
+            services.AddScoped<IBaseRepository<Vehicle>,EFRepository<Vehicle>>();
+
         }
 
 

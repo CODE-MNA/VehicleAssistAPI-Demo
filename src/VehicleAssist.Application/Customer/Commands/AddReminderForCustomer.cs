@@ -53,7 +53,7 @@ namespace VehicleAssist.Application.Customer.Commands
 
             _vehicleOwnerRepository.AddReminderToCustomer(request.CustomerId, reminder);
 
-                _unitOfWork.CommitChanges();
+                 _unitOfWork.CommitChanges();
 
 
                 return Unit.Value;

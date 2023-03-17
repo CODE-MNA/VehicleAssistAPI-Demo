@@ -17,7 +17,7 @@ namespace VehicleAssist.Domain
             }
         }
 
-        public AbstractDomainException(string exception) : base(exception)
+        public AbstractDomainException(string? exception) : base(exception)
         {
 
         }

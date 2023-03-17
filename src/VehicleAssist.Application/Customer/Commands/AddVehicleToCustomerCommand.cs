@@ -31,12 +31,12 @@ namespace VehicleAssist.Application.Customer.Commands
 
     }
 
-    internal class ActivateCustomerHandler : IRequestHandler<AddVehicleToCustomerCommand, Unit>
+    internal class AddVehicleToCustomerHandler : IRequestHandler<AddVehicleToCustomerCommand, Unit>
     {
         ICustomerRepository _vehicleOwnerRepository;
         IUnitOfWork _unitOfWork;
 
-        public ActivateCustomerHandler(ICustomerRepository vehicleOwnerRepository, IUnitOfWork unitOfWork)
+        public AddVehicleToCustomerHandler(ICustomerRepository vehicleOwnerRepository, IUnitOfWork unitOfWork)
         {
             _vehicleOwnerRepository = vehicleOwnerRepository;
             _unitOfWork = unitOfWork;

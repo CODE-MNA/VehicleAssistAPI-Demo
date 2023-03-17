@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using VehicleAssist.Domain.Customer;
 
 namespace VehicleAssist.API.Extensions
 {
@@ -10,10 +11,16 @@ namespace VehicleAssist.API.Extensions
 
             if(c == null)
             {
-                throw new Exception("Member Error");
+                throw new CustomerDoesntExistException("Customer Request Error");
             }
 
-            return int.Parse(c.Value);
+           int num =  int.Parse(c.Value);
+
+            if(num <= 0)
+            {
+                throw new CustomerDoesntExistException("Customer Request Error");
+            }
+            return num ;
         }
 
 

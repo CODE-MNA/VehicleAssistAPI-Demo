@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Application.Repositories;
+using VehicleAssist.Domain.Customer;
 
 namespace VehicleAssist.Application.Customer.Queries
 {
@@ -27,7 +28,12 @@ namespace VehicleAssist.Application.Customer.Queries
         {
           
             
-            CalendarData data = _customerRepository.GetCalenderData(request.CustomerId);
+            CalendarData data = _customerRepository?.GetCalenderData(request.CustomerId);
+
+            if(data == null)
+            {
+                throw new CustomerDoesntExistException("Invalid Customer, Couldn't get calendar data!");
+            }
 
             CalendarFromCustomerQueryResult result = new(data);
 

@@ -9,5 +9,7 @@ namespace VehicleAssist.Application.Repositories
     public interface IUnitOfWork
     {
         public void CommitChanges();
+
+        public Task CommitChangesAsync();
     }
 }

@@ -47,6 +47,11 @@ namespace VehicleAssist.Infrastructure.Data
           this.SaveChanges();
         }
 
+        public Task CommitChangesAsync()
+        {
+            return SaveChangesAsync();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

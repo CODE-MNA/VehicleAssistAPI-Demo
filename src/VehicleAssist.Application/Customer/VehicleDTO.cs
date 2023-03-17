@@ -23,7 +23,6 @@ namespace VehicleAssist.Application.Customer
         public string? ImageLink { get; private set; }
 
 
-        public int CustomerId { get; set; }
 
 
 
@@ -39,8 +38,7 @@ namespace VehicleAssist.Application.Customer
                 Color = vehicle.Color,
                 Mileage = vehicle.Mileage,
                 ImageLink = vehicle.ImageLink,
-                CustomerId = vehicle.CustomerId,
-
+            
             };
         }
     }

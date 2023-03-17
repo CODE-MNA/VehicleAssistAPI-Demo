@@ -28,6 +28,8 @@ namespace VehicleAssist.Infrastructure.CustomerServices
         public void AddVehicleToCustomer(int customerMemberId, Vehicle vehicle)
         {
             vehicle.CustomerId = customerMemberId;
+
+
             _dbContext.Vehicles.Add(vehicle);
         }
 

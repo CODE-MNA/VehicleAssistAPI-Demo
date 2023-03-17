@@ -15,5 +15,15 @@ namespace VehicleAssist.Infrastructure.Temporary
         {
             Console.WriteLine("Saved Changes!");
         }
+
+        public Task CommitChangesAsync()
+        {
+            Task.Delay(311);
+            Console.WriteLine("Saved Changes Asuncly!");
+
+            return Task.CompletedTask;  
+
+
+        }
     }
 }

@@ -26,6 +26,13 @@ namespace VehicleAssist.Domain.Customer
             Vehicles.Add(vehicle);
         }
 
+        public void AddNewVehicle(Vehicle vehicle)
+        {
+            
+            Vehicles?.Add(vehicle);
+        }
+
+
 
         public static Customer ConvertFromMember(Member.Member member)
         {

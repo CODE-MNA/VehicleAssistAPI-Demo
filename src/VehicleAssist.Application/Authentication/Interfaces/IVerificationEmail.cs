@@ -10,7 +10,7 @@ namespace VehicleAssist.Application.Authentication.Interfaces
     public interface IVerificationEmail
     {
 
-        public  void SendVerificationEmail(Member member);
+        public  Task SendVerificationEmail(Member member);
 
         
 

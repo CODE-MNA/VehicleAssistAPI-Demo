@@ -29,7 +29,7 @@ namespace VehicleAssist.Infrastructure.Authentication
             _urlAccessor = httpContextAccessor;
         }
 
-        public  void SendVerificationEmail(Member member)
+        public  Task SendVerificationEmail(Member member)
         {
 
             try
@@ -59,11 +59,12 @@ namespace VehicleAssist.Infrastructure.Authentication
 
             mailRequest.BodyRazorTemplate = @"<h1>Vehicle Assist Verification </h1><br>Hey @Model.Username, Click <a href=@Model.Link> Here</a> To Activate account.";
 
-            _mailService.SendMailAsync(mailRequest);
+            return _mailService.SendMailAsync(mailRequest);
 
             }catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                throw;
             }
         }
 

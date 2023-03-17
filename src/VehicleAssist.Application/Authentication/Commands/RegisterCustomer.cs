@@ -111,7 +111,15 @@ namespace VehicleAssist.Application.Authentication.Commands
             {
                 throw new MemberAlreadyExistsException("Member already registered. Email already exists");
             }
-         
+
+
+             member = _memberRepository.FindMemberByUsername<Member>(request.Email);
+
+            if (member != null)
+            {
+                throw new MemberAlreadyExistsException("Member already registered. Username already exists");
+            }
+
             string hashedPassword = _passwordHasher.HashPassword(request.Password);
 
             string message;
@@ -130,10 +138,23 @@ namespace VehicleAssist.Application.Authentication.Commands
 
 
             _memberRepository.Add(member);
-            _unitOfWork.CommitChanges();
 
+
+               
             
-            _verificationEmailSender.SendVerificationEmail(member);
+            await _unitOfWork.CommitChangesAsync();
+
+           
+
+
+
+
+            _ = Task.Run(async () =>
+            {
+               
+                 await _verificationEmailSender.SendVerificationEmail(member);
+
+            });
             
 
          
