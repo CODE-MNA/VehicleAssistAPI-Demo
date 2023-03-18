@@ -34,8 +34,7 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
 
             builder.Property(b => b.MemberId).HasColumnName("MemberId");
 
-            builder.HasIndex(b => b.UserName).IsUnique();         
-            builder.HasIndex(b => b.Email).IsUnique();         
+            
 
             builder.HasKey(m => m.MemberId);
             
