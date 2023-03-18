@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using VehicleAssist.Infrastructure.CustomerServices;
 using VehicleAssist.Domain.Customer;
+using VehicleAssist.Domain.Reminders;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -78,9 +79,9 @@ namespace VehicleAssist.Infrastructure
                     sqlServerOptions.CommandTimeout(20);
                 });
             });
-
+            
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<VehicleAssistDBContext>());
-
+            services.AddScoped<IBaseRepository<Reminder>, EFRepository<Reminder>>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
