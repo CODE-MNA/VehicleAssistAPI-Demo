@@ -43,6 +43,20 @@ namespace VehicleAssist.Domain.Customer
             return vehicle;
         }
 
+        public void UpdateVehicleData(string name, string? plateNumber, string? description, string? color, int? mileage, string? imageLink)
+        {
+
+
+            Name = name;
+            PlateNumber = plateNumber;
+            Description = description;
+            Color = color;
+            Mileage = mileage;
+            ImageLink = imageLink;
+
+        }
+
+
         public int VehicleId { get; set; }
         public string Name { get; private set; }
 

@@ -7,7 +7,7 @@ using VehicleAssist.Domain.Customer;
 
 namespace VehicleAssist.Domain.Reminders
 {
-    public class Reminder
+    public class Reminder : BaseEntity
     {
         private Reminder(int reminderId, string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude,int customerId)
         {

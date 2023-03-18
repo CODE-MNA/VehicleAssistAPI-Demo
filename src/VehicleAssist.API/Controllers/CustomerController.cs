@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReminderAssist.Application.Customer.Queries;
 using VehicleAssist.API.Extensions;
 using VehicleAssist.APIContracts;
 using VehicleAssist.Application.Customer.Commands;
 using VehicleAssist.Application.Customer.Queries;
+using VehicleAssist.Domain;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -64,6 +66,27 @@ namespace VehicleAssist.API.Controllers
 
         }
 
+        [HttpGet("vehicles/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> GetVehicleDetails(int id)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+
+            int vehicleId = id;
+
+
+          var result =  await _mediator.Send(new VehicleDetailsQuery()
+            {
+                CustomerId=possibleCustomerId,
+                VehicleId=vehicleId
+            });
+
+            return new JsonResult(result);
+
+
+        }
+
 
         [HttpDelete("vehicles/{id}")]
         [Authorize(Roles = "Customer")]
@@ -71,6 +94,7 @@ namespace VehicleAssist.API.Controllers
         {
             int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
 
+         
 
             int vehicleId = id;
 
@@ -89,12 +113,28 @@ namespace VehicleAssist.API.Controllers
 
         [HttpPut("vehicles/{id}")]
         [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> UpdateVehicleInformation([FromBody] AddVehicleRequest request)
+        public async Task<IActionResult> UpdateVehicleInformation([FromRoute] int id,[FromBody] AddVehicleRequest request)
         {
             int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
 
+            if (id == 0)
+            {
+                throw new AbstractDomainException("Enter proper vehicle ID");
+            }
 
+            var command = new UpdateVehicleInformationCommand()
+            {
+                VehicleId = id,
+                Description = request.Description,
+                Color = request.Color,
+                CustomerId = possibleCustomerId,
+                ImageLink = request.ImageLink,
+                Mileage = request.Mileage,
+                Name = request.Name,
+                PlateNumber = request.PlateNumber
+            };
 
+            await _mediator.Send(command);
 
            
 
@@ -148,36 +188,58 @@ namespace VehicleAssist.API.Controllers
         }
 
 
-       // // PUT api/<CustomerController>/vehicle/:id
-       // [HttpPut("{id}")]
-       // [Authorize(Roles = "Customer")]
-
-       // public void Put(int id, [FromBody] string value)
-       // {
-       // }
-
-       // // DELETE api/<CustomerController>/vehicle/:id
-       // [HttpDelete("{id}")]
-       // [Authorize(Roles = "Customer")]
-       // public void Delete(int id)
-       // {
-       // }
+        [HttpGet("reminders/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> GetReminderDetails(int id)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
 
 
-       //[Authorize]
-       // [HttpGet]
-       // public IActionResult GetAllCustomerData()
-       // {
-       //     Console.WriteLine(HttpContext.Request.Headers.Authorization);
+            int reminderId = id;
 
-       //     foreach (var item in User.Claims)
-       //     {
-       //         Console.WriteLine(item.Value);
-       //     }
 
-       //     int possibleCustomer = User.GetMemberIdFromClaimsPrincipal();
+            var result = await _mediator.Send(new ReminderDetailsQuery()
+            {
+                CustomerId = possibleCustomerId,
+                ReminderId = reminderId
+            });
 
-       //     return Ok(new { loggedInCustomerId = possibleCustomer });
-       // }
+            return new JsonResult(result);
+
+
+        }
+
+
+        // // PUT api/<CustomerController>/vehicle/:id
+        // [HttpPut("{id}")]
+        // [Authorize(Roles = "Customer")]
+
+        // public void Put(int id, [FromBody] string value)
+        // {
+        // }
+
+        // // DELETE api/<CustomerController>/vehicle/:id
+        // [HttpDelete("{id}")]
+        // [Authorize(Roles = "Customer")]
+        // public void Delete(int id)
+        // {
+        // }
+
+
+        //[Authorize]
+        // [HttpGet]
+        // public IActionResult GetAllCustomerData()
+        // {
+        //     Console.WriteLine(HttpContext.Request.Headers.Authorization);
+
+        //     foreach (var item in User.Claims)
+        //     {
+        //         Console.WriteLine(item.Value);
+        //     }
+
+        //     int possibleCustomer = User.GetMemberIdFromClaimsPrincipal();
+
+        //     return Ok(new { loggedInCustomerId = possibleCustomer });
+        // }
     }
 }
