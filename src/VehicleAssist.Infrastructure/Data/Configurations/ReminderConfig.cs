@@ -13,9 +13,15 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Reminder> builder)
         {
-            builder.OwnsMany(x => x.ReminderAlarmSchedules)
-                .WithOwner(c => c.Reminder)
+            builder.OwnsMany(x => x.ReminderAlarmSchedules, a =>
+            {
+                a.WithOwner(x => x.Reminder)
                 .HasForeignKey(x => x.ReminderId);
+                a.HasKey(x => x.ReminderAlarmScheduleId);
+                
+                a.Property(x => x.ScheduleType).IsRequired().HasConversion<string>();
+            });
+         
            
         }
     }
