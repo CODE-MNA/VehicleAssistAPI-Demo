@@ -126,7 +126,7 @@ namespace VehicleAssist.Application.Authentication.Commands
             if (request.IsCompany)
             {
                 message = "Registered Company";
-                 member = Company.CreateCompanyFromRegisterData(request.UserName, request.FirstName, request.LastName, request.Email, request.PhoneNumber, hashedPassword,request.CompanyName,request.CompanyDescription);
+                 member = Domain.Company.Company.CreateCompanyFromRegisterData(request.UserName, request.FirstName, request.LastName, request.Email, request.PhoneNumber, hashedPassword,request.CompanyName,request.CompanyDescription);
             }
             else
             {

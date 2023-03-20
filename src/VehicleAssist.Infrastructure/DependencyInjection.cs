@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using VehicleAssist.Infrastructure.CustomerServices;
 using VehicleAssist.Domain.Customer;
+using VehicleAssist.Domain.Company;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -87,6 +88,8 @@ namespace VehicleAssist.Infrastructure
 
             //Generic
             services.AddScoped<IBaseRepository<Vehicle>,EFRepository<Vehicle>>();
+            services.AddScoped<IBaseRepository<Deal>, EFRepository<Deal>>();
+
 
         }
 

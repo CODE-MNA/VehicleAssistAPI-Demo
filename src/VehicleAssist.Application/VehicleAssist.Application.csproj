@@ -15,4 +15,8 @@
     <ProjectReference Include="..\VehicleAssist.Domain\VehicleAssist.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Company\Commands\" />
+  </ItemGroup>
+
 </Project>

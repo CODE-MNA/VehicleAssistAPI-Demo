@@ -25,7 +25,7 @@ namespace VehicleAssist.API.Controllers
         [HttpGet("vehicles")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetCustomerVehicles()
-        {
+        { // get user id from token
            int possibleCustomerId =  User.GetMemberIdFromClaimsPrincipal();
             
             

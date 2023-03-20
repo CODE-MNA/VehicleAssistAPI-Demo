@@ -30,7 +30,7 @@ namespace VehicleAssist.Application.Customer.Queries
 
             int customerId = request.CustomerId;
 
-          List<Vehicle> vehicles =  _customerRepository.GetAllVehiclesOfCustomer(customerId).ToList();
+            List<Vehicle> vehicles =  _customerRepository.GetAllVehiclesOfCustomer(customerId).ToList();
 
             List<VehicleDTO> dtos = new List<VehicleDTO>();
             foreach (var vehicle in vehicles)

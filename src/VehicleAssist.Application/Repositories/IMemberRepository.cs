@@ -12,7 +12,7 @@ namespace VehicleAssist.Application.Repositories
     public interface IMemberRepository : IBaseRepository<Member>
     {
         public T? FindMemberByUsername<T>(string username) where T : Member;
-        public Company GetCompanyData(int id);
+        public Domain.Company.Company GetCompanyData(int id);
         public T? FindMemberByEmail<T>(string email) where T : Member;
 
     }

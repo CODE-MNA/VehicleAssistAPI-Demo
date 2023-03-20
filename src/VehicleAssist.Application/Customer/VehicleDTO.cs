@@ -23,10 +23,6 @@ namespace VehicleAssist.Application.Customer
         public string? ImageLink { get; private set; }
 
 
-
-
-
-
         public static VehicleDTO FromVehicle(Vehicle vehicle)
         {
             return new VehicleDTO()

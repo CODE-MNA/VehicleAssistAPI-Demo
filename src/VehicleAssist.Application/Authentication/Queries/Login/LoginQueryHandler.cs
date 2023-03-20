@@ -73,7 +73,7 @@ namespace VehicleAssist.Application.Authentication.Queries.Login
 
                 if (result.IsCompany)
                 {
-                    Company company = _memberRepository.GetCompanyData(member.MemberId);
+                    Domain.Company.Company company = _memberRepository.GetCompanyData(member.MemberId);
                     result.CompanyName = company.CompanyName;
                     result.CompanyDescription = company.CompanyDescription;
                 }
