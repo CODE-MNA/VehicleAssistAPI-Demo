@@ -7,9 +7,9 @@ using VehicleAssist.Domain.Customer;
 
 namespace VehicleAssist.Domain.Reminders
 {
-    public class Reminder
+    public class Reminder : BaseEntity
     {
-        private Reminder(int reminderId, string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude,int customerId)
+        private Reminder(int reminderId, string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude, int customerId)
         {
             ReminderId = reminderId;
             Name = name;
@@ -18,26 +18,26 @@ namespace VehicleAssist.Domain.Reminders
             ServiceType = serviceType;
             Latitude = latitude;
             Longitude = longitude;
-     
+
             CustomerId = customerId;
-           
+
         }
 
         public Reminder(string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude)
         {
-        
+
             Name = name;
             Description = description;
             ReminderDateTime = reminderDateTime;
             ServiceType = serviceType;
             Latitude = latitude;
             Longitude = longitude;
-          
+
 
         }
-        
-        
-        
+
+
+
 
 
         public int ReminderId { get; private set; }
@@ -48,6 +48,7 @@ namespace VehicleAssist.Domain.Reminders
 
         public DateTime ReminderDateTime { get; private set; }
 
+        public List<ReminderAlarmSchedule> ReminderAlarmSchedules {get; set ;}
 
         public string ServiceType { get; private set; }
 

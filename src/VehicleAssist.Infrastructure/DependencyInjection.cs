@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using VehicleAssist.Infrastructure.CustomerServices;
 using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Company;
+using VehicleAssist.Domain.Reminders;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -68,7 +69,12 @@ namespace VehicleAssist.Infrastructure
 
         private static void AddDatabasePersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            string CONN_STRING_NAME = "VehicleAssistDBContext";
+            string CONN_STRING_NAME = "RemoteDBContext";
+            if (configuration.GetSection("ASPNETCORE_ENVIRONMENT").Value == "Development")
+            {
+               //  CONN_STRING_NAME = "LocalDBContext";
+
+            }
 
 
             services.AddDbContext<VehicleAssistDBContext>(options =>
@@ -79,9 +85,9 @@ namespace VehicleAssist.Infrastructure
                     sqlServerOptions.CommandTimeout(20);
                 });
             });
-
+            
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<VehicleAssistDBContext>());
-
+            services.AddScoped<IBaseRepository<Reminder>, EFRepository<Reminder>>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 

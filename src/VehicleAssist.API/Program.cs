@@ -141,5 +141,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGet("",async (s)=>{
+    await s.Response.WriteAsync("Vehicle Assist API Running!");
+});
 app.Run();
