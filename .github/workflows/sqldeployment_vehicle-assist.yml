@@ -29,7 +29,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: registry-1.docker.io/codemna/vehicle-assist:${{ github.sha }}
+        tags: codemna/vehicle-assist:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,4 +47,4 @@ jobs:
         app-name: 'vehicle-assist'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_4e0a0b3dbaa8472387debc7e746432ae }}
-        images: 'registry-1.docker.io/codemna/vehicle-assist:${{ github.sha }}'
+        images: 'codemna/vehicle-assist:${{ github.sha }}'
