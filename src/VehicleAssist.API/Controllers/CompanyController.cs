@@ -23,7 +23,7 @@ namespace VehicleAssist.API.Controllers
 
         // GET: api/Company/{id}/Deals
         //will do the connections in companyController.
-        [HttpGet("company/deal/{id}")]
+        [HttpGet("{id}/deals")]
         public async Task<IActionResult> GetCompanyDeals(int companyId)
         {
 
