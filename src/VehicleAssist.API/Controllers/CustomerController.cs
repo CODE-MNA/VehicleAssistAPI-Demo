@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ReminderAssist.Application.Customer.Queries;
 using VehicleAssist.API.Extensions;
 using VehicleAssist.APIContracts;
 using VehicleAssist.Application.Customer.Commands;
