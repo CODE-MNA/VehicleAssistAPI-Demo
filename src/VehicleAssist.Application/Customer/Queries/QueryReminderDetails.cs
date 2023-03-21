@@ -8,7 +8,7 @@ using VehicleAssist.Application.Customer;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Reminders;
 
-namespace ReminderAssist.Application.Customer.Queries
+namespace VehicleAssist.Application.Customer.Queries
 {
     public record ReminderDetailsQuery : IRequest<ReminderDTO>
     {
