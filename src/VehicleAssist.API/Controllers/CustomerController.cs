@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VehicleAssist.API.Extensions;
 using VehicleAssist.APIContracts;
+using VehicleAssist.Application.Customer;
 using VehicleAssist.Application.Customer.Commands;
 using VehicleAssist.Application.Customer.Queries;
 using VehicleAssist.Domain;
@@ -23,6 +24,9 @@ namespace VehicleAssist.API.Controllers
             _mediator = mediator;
         }
 
+
+        #region Vehicles
+
         [HttpGet("vehicles")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetCustomerVehicles()
@@ -37,6 +41,28 @@ namespace VehicleAssist.API.Controllers
 
             
         }
+
+        [HttpGet("vehicles/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> GetVehicleDetails(int id)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+
+            int vehicleId = id;
+
+
+            var result = await _mediator.Send(new VehicleDetailsQuery()
+            {
+                CustomerId = possibleCustomerId,
+                VehicleId = vehicleId
+            });
+
+            return new JsonResult(result);
+
+
+        }
+
 
         [HttpPost("vehicles")]
         [Authorize(Roles = "Customer")]
@@ -65,27 +91,7 @@ namespace VehicleAssist.API.Controllers
 
         }
 
-        [HttpGet("vehicles/{id}")]
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> GetVehicleDetails(int id)
-        {
-            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
-
-
-            int vehicleId = id;
-
-
-          var result =  await _mediator.Send(new VehicleDetailsQuery()
-            {
-                CustomerId=possibleCustomerId,
-                VehicleId=vehicleId
-            });
-
-            return new JsonResult(result);
-
-
-        }
-
+   
 
         [HttpDelete("vehicles/{id}")]
         [Authorize(Roles = "Customer")]
@@ -142,6 +148,9 @@ namespace VehicleAssist.API.Controllers
 
         }
 
+        #endregion
+
+        #region Reminders
 
         [HttpGet("calendar")]
         [Authorize(Roles = "Customer")]
@@ -157,36 +166,6 @@ namespace VehicleAssist.API.Controllers
 
 
         }
-
-
-
-        [HttpPost("reminders")]
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> AddReminderToCustomer([FromBody] AddReminderRequest request)
-        {
-            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
-
-
-
-            await _mediator.Send(new AddReminderForCustomerCommand() 
-            { 
-                CustomerId = possibleCustomerId,
-                ReminderDateTime = request.ReminderDateTime,
-                Description = request.Description,
-                Latitude = request.Latitude,
-                Longitude = request.Longitude,
-                Name = request.Name,
-                ServiceType = request.ServiceType,
-
-
-            });
-
-            return  Ok();
-
-
-        }
-
-
         [HttpGet("reminders/{id}")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetReminderDetails(int id)
@@ -209,36 +188,69 @@ namespace VehicleAssist.API.Controllers
         }
 
 
-        // // PUT api/<CustomerController>/vehicle/:id
-        // [HttpPut("{id}")]
-        // [Authorize(Roles = "Customer")]
-
-        // public void Put(int id, [FromBody] string value)
-        // {
-        // }
-
-        // // DELETE api/<CustomerController>/vehicle/:id
-        // [HttpDelete("{id}")]
-        // [Authorize(Roles = "Customer")]
-        // public void Delete(int id)
-        // {
-        // }
 
 
-        //[Authorize]
-        // [HttpGet]
-        // public IActionResult GetAllCustomerData()
-        // {
-        //     Console.WriteLine(HttpContext.Request.Headers.Authorization);
 
-        //     foreach (var item in User.Claims)
-        //     {
-        //         Console.WriteLine(item.Value);
-        //     }
+        [HttpPost("reminders")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> AddReminderToCustomer([FromBody] AddReminderRequest request)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
 
-        //     int possibleCustomer = User.GetMemberIdFromClaimsPrincipal();
+            List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
-        //     return Ok(new { loggedInCustomerId = possibleCustomer });
-        // }
+            foreach (var item in request.RemindingTimes)
+            {
+                var entry = new ReminderScheduleDTO(item.TimeBefore,item.ScheduleType);
+                inputSchedules.Add(entry);
+            }
+
+            Console.WriteLine(inputSchedules);
+            await _mediator.Send(new AddReminderForCustomerCommand() 
+            { 
+                CustomerId = possibleCustomerId,
+                ReminderDateTime = request.ReminderDateTime,
+                Description = request.Description,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+                Name = request.Name,
+                ServiceType = request.ServiceType,
+                ReminderSchedules = inputSchedules
+                
+                
+
+            });
+
+            return  Ok();
+
+
+        }
+
+
+        [HttpDelete("reminders/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> DeleteReminder(int id)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+
+
+            int reminderId = id;
+
+
+            await _mediator.Send(new DeleteReminderCommand()
+            {
+              ReminderId = reminderId,
+                CustomerId = possibleCustomerId
+            });
+
+            return Ok();
+
+
+        }
+        #endregion
+
+
+
     }
 }

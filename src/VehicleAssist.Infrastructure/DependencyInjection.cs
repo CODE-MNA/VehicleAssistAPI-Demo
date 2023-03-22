@@ -69,7 +69,7 @@ namespace VehicleAssist.Infrastructure
 
         private static void AddDatabasePersistence(this IServiceCollection services, IConfiguration configuration)
         {
-             string   CONN_STRING_NAME = "RemoteDBContext";
+             string   CONN_STRING_NAME = "LocalDBContext";
 
             if (configuration.GetSection("ASPNETCORE_ENVIRONMENT").Value == "Development")
             {

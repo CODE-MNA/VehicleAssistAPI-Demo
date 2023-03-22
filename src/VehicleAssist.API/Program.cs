@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen(gen =>
     gen.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
     {
         Description = "JWT Authorization header {token}",
-        Name = "Authorization",
+        Name = "Authentication",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
