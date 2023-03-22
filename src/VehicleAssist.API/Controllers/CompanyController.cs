@@ -23,11 +23,11 @@ namespace VehicleAssist.API.Controllers
 
         // GET: api/Company/{id}/Deals
         //will do the connections in companyController.
-        [HttpGet("deal/{companyId}")]
-        public async Task<IActionResult> GetCompanyDeals(int companyId)
+        [HttpGet("deals")]
+        public async Task<IActionResult> GetCompanyDeals()
         {
 
-            CompanyDealsResults result = await _mediator.Send(new QueryCompanyDeals() { CompanyId = companyId });
+            CompanyDealsResults result = await _mediator.Send(new QueryCompanyDeals() { });
 
             return new JsonResult(result);
         }

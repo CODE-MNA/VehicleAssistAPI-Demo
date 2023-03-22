@@ -14,7 +14,6 @@ namespace VehicleAssist.Application.Company.Queries
 {
     public record QueryCompanyDeals : IRequest<CompanyDealsResults>
     {
-        public int CompanyId { get; set; }
     }
 
     public class GetCompanyDealsQueryHandler : IRequestHandler<QueryCompanyDeals, CompanyDealsResults>
@@ -30,7 +29,7 @@ namespace VehicleAssist.Application.Company.Queries
         public async Task<CompanyDealsResults> Handle(QueryCompanyDeals request, CancellationToken cancellationToken)
         {
 
-            List<Deal>  deals = _repository.GetList(c=>c.CompanyId == request.CompanyId).ToList();
+            List<Deal>  deals = _repository.GetList().ToList();
 
             List<DealsDTO> dtos = new List<DealsDTO>();
 
