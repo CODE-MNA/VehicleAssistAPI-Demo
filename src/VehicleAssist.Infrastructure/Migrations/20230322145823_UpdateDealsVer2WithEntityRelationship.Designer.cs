@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleAssist.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using VehicleAssist.Infrastructure.Data;
 namespace VehicleAssist.Infrastructure.Migrations
 {
     [DbContext(typeof(VehicleAssistDBContext))]
-    partial class VehicleAssistDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230322145823_UpdateDealsVer2WithEntityRelationship")]
+    partial class UpdateDealsVer2WithEntityRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

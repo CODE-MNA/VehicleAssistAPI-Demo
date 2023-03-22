@@ -23,5 +23,7 @@ namespace VehicleAssist.Domain.Company
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public Company? Company { get; set; }
     }
 }

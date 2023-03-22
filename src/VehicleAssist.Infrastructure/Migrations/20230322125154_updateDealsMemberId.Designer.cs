@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleAssist.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using VehicleAssist.Infrastructure.Data;
 namespace VehicleAssist.Infrastructure.Migrations
 {
     [DbContext(typeof(VehicleAssistDBContext))]
-    partial class VehicleAssistDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230322125154_updateDealsMemberId")]
+    partial class updateDealsMemberId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +83,7 @@ namespace VehicleAssist.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DealId"));
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyMemberId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -94,12 +97,15 @@ namespace VehicleAssist.Infrastructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("DealId");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("CompanyMemberId");
 
                     b.ToTable("Deals");
                 });
@@ -321,13 +327,9 @@ namespace VehicleAssist.Infrastructure.Migrations
 
             modelBuilder.Entity("VehicleAssist.Domain.Company.Deal", b =>
                 {
-                    b.HasOne("VehicleAssist.Domain.Company.Company", "Company")
+                    b.HasOne("VehicleAssist.Domain.Company.Company", null)
                         .WithMany("DealServices")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
+                        .HasForeignKey("CompanyMemberId");
                 });
 
             modelBuilder.Entity("VehicleAssist.Domain.Customer.Vehicle", b =>
