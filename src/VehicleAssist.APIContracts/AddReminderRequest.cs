@@ -23,9 +23,19 @@ namespace VehicleAssist.APIContracts
         public float Latitude { get; set; }
         public float Longitude { get; set; }
     
+        public List<ReminderSchedule> RemindingTimes { get; set; }
+        
 
 
+     
 
+
+    }
+
+    public struct ReminderSchedule
+    {
+        public float TimeBefore { get; set; }
+        public string ScheduleType { get; set; }
     }
 
 }

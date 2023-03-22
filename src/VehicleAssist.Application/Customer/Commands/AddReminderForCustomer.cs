@@ -28,7 +28,7 @@ namespace VehicleAssist.Application.Customer.Commands
         public float Longitude { get; set; }
         public int CustomerId { get; set; }
 
-
+        public List<ReminderScheduleDTO> ReminderSchedules { get; set; }
 
 
     }
@@ -50,7 +50,13 @@ namespace VehicleAssist.Application.Customer.Commands
             //Can refactor later to use the domain function
             Reminder reminder = new Reminder(request.Name, request.Description, request.ReminderDateTime, request.ServiceType, request.Latitude, request.Longitude);
 
+            foreach (var item in request.ReminderSchedules)
+            {
+                ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimePrior, item.ScheduleType);
+                reminder.AddSchedule(newSchedule);
 
+
+            }
             _vehicleOwnerRepository.AddReminderToCustomer(request.CustomerId, reminder);
 
                  _unitOfWork.CommitChanges();

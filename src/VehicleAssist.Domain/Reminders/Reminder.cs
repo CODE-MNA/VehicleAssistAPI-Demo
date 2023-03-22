@@ -59,7 +59,14 @@ namespace VehicleAssist.Domain.Reminders
         public int CustomerId { get;  set; }
         public Customer.Customer? Customer { get;  set; }
 
-
+        public void AddSchedule(ReminderAlarmSchedule schedule)
+        {
+            if(ReminderAlarmSchedules == null)
+            {
+                ReminderAlarmSchedules = new List<ReminderAlarmSchedule>();
+            }
+            ReminderAlarmSchedules.Add(schedule);
+        }
 
     }
 }
