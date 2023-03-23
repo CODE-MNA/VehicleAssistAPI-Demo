@@ -199,13 +199,17 @@ namespace VehicleAssist.API.Controllers
 
             List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
-            foreach (var item in request.RemindingTimes)
-            {
-                var entry = new ReminderScheduleDTO(item.TimeBefore,item.ScheduleType);
-                inputSchedules.Add(entry);
+            if(request.RemindingTimes != null) {
+                foreach (var item in request.RemindingTimes)
+                {
+                    var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
+                    inputSchedules.Add(entry);
+                }
             }
 
-            Console.WriteLine(inputSchedules);
+            
+
+         
             await _mediator.Send(new AddReminderForCustomerCommand() 
             { 
                 CustomerId = possibleCustomerId,
@@ -222,6 +226,47 @@ namespace VehicleAssist.API.Controllers
             });
 
             return  Ok();
+
+
+        }
+
+        [HttpPut("reminders/{id}")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> UpdateReminder([FromRoute]int id,[FromBody] AddReminderRequest request)
+        {
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+            List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
+
+            if (request.RemindingTimes != null)
+            {
+                foreach (var item in request.RemindingTimes)
+                {
+                    var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
+                    inputSchedules.Add(entry);
+                }
+            }
+
+
+
+
+            await _mediator.Send(new UpdateReminderCommand()
+            {
+                ReminderId = id,
+                CustomerId = possibleCustomerId,
+                ReminderDateTime = request.ReminderDateTime,
+                Description = request.Description,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+                Name = request.Name,
+                ServiceType = request.ServiceType,
+                ReminderSchedules = inputSchedules
+
+
+
+            });
+
+            return Ok();
 
 
         }
