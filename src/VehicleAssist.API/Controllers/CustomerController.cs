@@ -199,7 +199,7 @@ namespace VehicleAssist.API.Controllers
 
             List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
-            foreach (var item in request.RemindingTimes)
+            foreach (var item in request.Schedules)
             {
                 var entry = new ReminderScheduleDTO(item.TimeBefore,item.ScheduleType);
                 inputSchedules.Add(entry);
@@ -216,14 +216,9 @@ namespace VehicleAssist.API.Controllers
                 Name = request.Name,
                 ServiceType = request.ServiceType,
                 ReminderSchedules = inputSchedules
-                
-                
-
             });
 
-            return  Ok();
-
-
+            return Ok();
         }
 
 
