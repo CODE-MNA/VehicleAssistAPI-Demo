@@ -199,8 +199,8 @@ namespace VehicleAssist.API.Controllers
 
             List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
-            if(request.RemindingTimes != null) {
-                foreach (var item in request.RemindingTimes)
+            if(request.Schedules != null) {
+                foreach (var item in request.Schedules)
                 {
                     var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
                     inputSchedules.Add(entry);
@@ -238,9 +238,9 @@ namespace VehicleAssist.API.Controllers
 
             List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
-            if (request.RemindingTimes != null)
+            if (request.Schedules != null)
             {
-                foreach (var item in request.RemindingTimes)
+                foreach (var item in request.Schedules)
                 {
                     var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
                     inputSchedules.Add(entry);
