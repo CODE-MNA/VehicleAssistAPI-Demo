@@ -48,6 +48,11 @@ namespace VehicleAssist.Infrastructure.Temporary
             throw new NotImplementedException();
         }
 
+        public ICollection<T> GetList(Expression<Func<T, bool>>? expression, params string[] includedEntities)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(T entity)
         {
             throw new NotImplementedException();

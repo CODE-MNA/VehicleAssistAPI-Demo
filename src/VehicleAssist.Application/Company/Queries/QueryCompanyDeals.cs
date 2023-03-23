@@ -29,14 +29,13 @@ namespace VehicleAssist.Application.Company.Queries
         public async Task<CompanyDealsResults> Handle(QueryCompanyDeals request, CancellationToken cancellationToken)
         {
 
-            List<Deal>  deals = _repository.GetList().ToList();
+            List<Deal>  deals = _repository.GetList(null, "Company").ToList();
 
             List<DealsDTO> dtos = new List<DealsDTO>();
 
             foreach (var deal in deals)
             {
                 dtos.Add(DealsDTO.FromDeal(deal));
-
             }
 
             CompanyDealsResults result = new()

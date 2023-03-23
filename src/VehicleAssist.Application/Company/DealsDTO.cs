@@ -22,6 +22,8 @@ namespace VehicleAssist.Application.Company
 
         public int CompanyId { get; set; }
 
+        public string? CompanyName { get; set; }
+
 
         public static DealsDTO FromDeal(Deal deal)
         {
@@ -33,6 +35,7 @@ namespace VehicleAssist.Application.Company
                 StartDate = deal.StartDate,
                 EndDate = deal.EndDate,
                 CompanyId = deal.CompanyId,
+                CompanyName = deal.Company.CompanyName
             };
         }
     }

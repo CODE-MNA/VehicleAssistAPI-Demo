@@ -11,6 +11,7 @@ namespace VehicleAssist.Application.Repositories
     public interface IBaseRepository<T> where T : BaseEntity
     {
         ICollection<T> GetList(Expression<Func<T, bool>>? expression = null);
+        ICollection<T> GetList(Expression<Func<T, bool>>? expression, params string[] includedEntities);
         T GetById(object id);
 
         void Add(T entity);

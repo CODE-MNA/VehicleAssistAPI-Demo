@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,7 +22,7 @@ namespace VehicleAssist.Infrastructure.Data
 
         public void Add(T entity)
         {
-                _dbContext.Set<T>().Add(entity);
+            _dbContext.Set<T>().Add(entity);
         }
 
         public void Delete(T entity)
@@ -31,18 +32,35 @@ namespace VehicleAssist.Infrastructure.Data
 
         public T GetById(object id)
         {
-          return _dbContext.Set<T>().Find(id);
+            return _dbContext.Set<T>().Find(id);
         }
 
-      
+
         public ICollection<T> GetList(Expression<Func<T, bool>>? expression)
         {
-            if(expression == null)
+            if (expression == null)
             {
+
                 return _dbContext.Set<T>().ToList().AsReadOnly();
             }
 
             return _dbContext.Set<T>().Where(expression).ToList().AsReadOnly();
+        }
+
+        public ICollection<T> GetList(Expression<Func<T, bool>>? expression, params string[] includedEntities)
+        {
+            IQueryable<T> queryableSet = _dbContext.Set<T>();
+            foreach (var subProperty in includedEntities)
+            {
+                queryableSet = queryableSet.Include(subProperty);
+            }
+
+            if (expression == null)
+            {    
+                return queryableSet.ToList().AsReadOnly();
+            }
+
+            return queryableSet.Where(expression).ToList().AsReadOnly();
         }
 
         public void Update(T entity)
