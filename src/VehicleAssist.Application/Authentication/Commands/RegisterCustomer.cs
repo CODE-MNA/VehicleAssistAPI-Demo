@@ -113,7 +113,7 @@ namespace VehicleAssist.Application.Authentication.Commands
             }
 
 
-             member = _memberRepository.FindMemberByUsername<Member>(request.Email);
+             member = _memberRepository.FindMemberByUsername<Member>(request.UserName);
 
             if (member != null)
             {
