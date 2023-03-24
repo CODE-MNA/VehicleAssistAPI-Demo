@@ -14,7 +14,7 @@ namespace VehicleAssist.Domain.Company
         /// </summary>
         public int DealId { get; set; }
 
-        public int CompanyId { get; set; }
+        public int MemberId { get; set; }
 
         public string DealName { get; set; }
 

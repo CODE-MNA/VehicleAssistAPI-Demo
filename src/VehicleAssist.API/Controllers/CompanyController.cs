@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VehicleAssist.API.Extensions;
-using VehicleAssist.Application.Company.Queries;
 using VehicleAssist.Application.Customer.Queries;
 using VehicleAssist.Domain.Company;
 
@@ -21,16 +20,6 @@ namespace VehicleAssist.API.Controllers
             _mediator = mediator;
         }
 
-        // GET: api/Company/{id}/Deals
-        //will do the connections in companyController.
-        [HttpGet("deals")]
-        public async Task<IActionResult> GetCompanyDeals()
-        {
-
-            CompanyDealsResults result = await _mediator.Send(new QueryCompanyDeals() { });
-
-            return new JsonResult(result);
-        }
 
     }
 }

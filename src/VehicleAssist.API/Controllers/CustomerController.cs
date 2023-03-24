@@ -232,9 +232,6 @@ namespace VehicleAssist.API.Controllers
         public async Task<IActionResult> DeleteReminder(int id)
         {
             int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
-
-
-
             int reminderId = id;
 
 
@@ -247,6 +244,15 @@ namespace VehicleAssist.API.Controllers
             return Ok();
 
 
+        }
+
+        [HttpGet("deals")]
+        public async Task<IActionResult> GetCompanyDeals()
+        {
+
+            CustomerDealsResults result = await _mediator.Send(new QueryCustomerDeals() { });
+
+            return new JsonResult(result);
         }
         #endregion
 

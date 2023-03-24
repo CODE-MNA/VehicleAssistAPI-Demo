@@ -16,7 +16,7 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
         {
             builder.HasMany(c => c.CompanyServices);
 
-            builder.HasMany(c => c.DealServices).WithOne(d=>d.Company).HasForeignKey(x=>x.CompanyId);
+            builder.HasMany(c => c.DealServices).WithOne(d=>d.Company).HasForeignKey(x=>x.MemberId);
         }
     }
 }

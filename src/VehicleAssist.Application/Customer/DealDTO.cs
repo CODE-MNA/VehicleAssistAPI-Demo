@@ -5,12 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using VehicleAssist.Domain.Company;
 
-namespace VehicleAssist.Application.Company
+namespace VehicleAssist.Application.Customer
 {
-    public class DealsDTO
+    public class DealDTO
     {
-        //how to pass data to the UI and how it will show. Follow VEhicleDTO.cs
-
         public int DealId { get; set; }
         public string Name { get; private set; }
 
@@ -20,22 +18,22 @@ namespace VehicleAssist.Application.Company
 
         public DateTime? EndDate { get; private set; }
 
-        public int CompanyId { get; set; }
+        public int MemberId { get; set; }
 
         public string? CompanyName { get; set; }
 
 
-        public static DealsDTO FromDeal(Deal deal)
+        public static DealDTO FromDeal(Deal deal)
         {
-            return new DealsDTO()
+            return new DealDTO()
             {
-                DealId= deal.DealId,
+                DealId = deal.DealId,
                 Name = deal.DealName,
                 Content = deal.Content,
                 StartDate = deal.StartDate,
                 EndDate = deal.EndDate,
-                CompanyId = deal.CompanyId,
-                CompanyName = deal.Company.CompanyName
+                MemberId = deal.MemberId,
+                CompanyName = deal.Company.CompanyName,
             };
         }
     }
