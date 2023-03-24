@@ -68,5 +68,17 @@ namespace VehicleAssist.Domain.Reminders
             ReminderAlarmSchedules.Add(schedule);
         }
 
+        public void UpdateReminderData(string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude, List<ReminderAlarmSchedule> newSchedules)
+        {
+            Name = name;
+            Description = description;
+            ReminderDateTime = reminderDateTime;
+            ServiceType = serviceType;
+            Latitude = latitude;
+            Longitude = longitude;
+
+            ReminderAlarmSchedules = newSchedules;
+        }
+
     }
 }

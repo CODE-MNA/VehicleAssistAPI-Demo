@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen(gen =>
     gen.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
     {
         Description = "JWT Authorization header {token}",
-        Name = "Authentication",
+        Name = "Authorization",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
@@ -75,7 +75,7 @@ app.Use(async (context, next) =>
 
             };
 
-
+            context.Response.StatusCode = errorModel.StatusCode;
             await context.Response.WriteAsJsonAsync<ErrorModel>(errorModel);
         }
         catch (Exception ex)
