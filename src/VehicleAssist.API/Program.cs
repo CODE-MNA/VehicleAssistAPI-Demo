@@ -75,7 +75,7 @@ app.Use(async (context, next) =>
 
             };
 
-
+            context.Response.StatusCode = errorModel.StatusCode;
             await context.Response.WriteAsJsonAsync<ErrorModel>(errorModel);
         }
         catch (Exception ex)

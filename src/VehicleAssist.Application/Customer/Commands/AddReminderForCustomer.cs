@@ -52,7 +52,7 @@ namespace VehicleAssist.Application.Customer.Commands
 
             foreach (var item in request.ReminderSchedules)
             {
-                ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimePrior, item.ScheduleType);
+                ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimeBefore, item.ScheduleType);
                 reminder.AddSchedule(newSchedule);
 
 

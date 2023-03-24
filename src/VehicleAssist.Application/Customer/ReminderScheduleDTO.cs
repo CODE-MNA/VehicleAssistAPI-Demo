@@ -9,13 +9,13 @@ namespace VehicleAssist.Application.Customer
 {
     public class ReminderScheduleDTO
     {
-        public float TimePrior { get; set; }
+        public float TimeBefore { get; set; }
         public string ScheduleType { get; set; }
 
 
         public ReminderScheduleDTO(float timePrior, string scheduleType)
         {
-            TimePrior = timePrior;
+            TimeBefore = timePrior;
             if (string.IsNullOrEmpty(scheduleType))
             {
 
