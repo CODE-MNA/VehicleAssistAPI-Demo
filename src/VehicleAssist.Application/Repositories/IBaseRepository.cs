@@ -12,7 +12,7 @@ namespace VehicleAssist.Application.Repositories
     {
         ICollection<T> GetList(Expression<Func<T, bool>>? expression = null);
         ICollection<T> GetList(Expression<Func<T, bool>>? expression, params string[] includedEntities);
-        T GetById(object id);
+        T? GetById(object id);
 
         void Add(T entity);
 
