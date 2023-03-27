@@ -21,6 +21,7 @@ using VehicleAssist.Infrastructure.CustomerServices;
 using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Reminders;
+using VehicleAssist.Infrastructure.NotificationService;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -62,6 +63,7 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IVerificationEmail, VerificationEmail>();
 
+            services.AddHostedService<BackgroundScheduler>();
 
             return services;
 
