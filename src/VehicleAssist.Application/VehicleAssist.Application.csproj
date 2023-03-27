@@ -24,4 +24,8 @@
     <Folder Include="Company\Queries\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Application.UnitTests" />
+	</ItemGroup>
+	
 </Project>

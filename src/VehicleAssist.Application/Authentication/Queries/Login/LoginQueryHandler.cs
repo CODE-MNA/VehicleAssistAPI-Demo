@@ -28,7 +28,7 @@ namespace VehicleAssist.Application.Authentication.Queries.Login
         {
 
             //Find if username exists
-            Member? member = _memberRepository.FindMemberByUsername<Member>(request.username);
+            Member? member = _memberRepository.FindMemberByUsername<Member>(request.userName);
 
 
             if (member == null)
@@ -64,7 +64,7 @@ namespace VehicleAssist.Application.Authentication.Queries.Login
 
                     MemberType = member.MemberType,
 
-                    Username = member.UserName
+                    UserName = member.UserName
 
                 };
 

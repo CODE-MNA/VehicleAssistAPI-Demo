@@ -30,7 +30,7 @@ namespace VehicleAssist.Infrastructure.Data
             _dbContext.Remove(entity);
         }
 
-        public T GetById(object id)
+        public T? GetById(object id)
         {
             return _dbContext.Set<T>().Find(id);
         }

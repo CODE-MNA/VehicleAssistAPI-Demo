@@ -37,10 +37,10 @@ namespace VehicleAssist.Application.Authentication.Commands
 
             
            Member? member = _memberRepository.GetById(decodedUserId);
-
             if(member == null)
             {
-                throw new Exception("Something is Wrong with the verification");
+            
+                throw new Exception("Something went wrong with the verification!");
             }
 
 

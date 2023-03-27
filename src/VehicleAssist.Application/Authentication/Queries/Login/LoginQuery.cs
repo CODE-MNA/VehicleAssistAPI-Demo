@@ -9,7 +9,7 @@ namespace VehicleAssist.Application.Authentication.Queries.Login
 {
     public record LoginQuery : IRequest<LoginQueryResult>
     {
-        public string username;
+        public string userName;
         public string password;
     }
 }

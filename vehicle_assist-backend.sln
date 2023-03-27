@@ -12,28 +12,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleAssist.APIContracts", "src\VehicleAssist.APIContracts\VehicleAssist.APIContracts.csproj", "{C53D13E8-13AF-4E6D-A946-C0914B6BC490}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleAssist.APIContracts", "src\VehicleAssist.APIContracts\VehicleAssist.APIContracts.csproj", "{C53D13E8-13AF-4E6D-A946-C0914B6BC490}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleAssist.Application", "src\VehicleAssist.Application\VehicleAssist.Application.csproj", "{4A3F7111-3E40-472B-85C6-6A89508F4D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleAssist.Application", "src\VehicleAssist.Application\VehicleAssist.Application.csproj", "{4A3F7111-3E40-472B-85C6-6A89508F4D4A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B32C5269-07A2-42D2-A653-A9E59AF03E5B} = {B32C5269-07A2-42D2-A653-A9E59AF03E5B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleAssist.Infrastructure", "src\VehicleAssist.Infrastructure\VehicleAssist.Infrastructure.csproj", "{91EAFF41-B03A-4026-A75F-4B7F6FD7474B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleAssist.Infrastructure", "src\VehicleAssist.Infrastructure\VehicleAssist.Infrastructure.csproj", "{91EAFF41-B03A-4026-A75F-4B7F6FD7474B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4A3F7111-3E40-472B-85C6-6A89508F4D4A} = {4A3F7111-3E40-472B-85C6-6A89508F4D4A}
 		{B32C5269-07A2-42D2-A653-A9E59AF03E5B} = {B32C5269-07A2-42D2-A653-A9E59AF03E5B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleAssist.Domain", "src\VehicleAssist.Domain\VehicleAssist.Domain.csproj", "{B32C5269-07A2-42D2-A653-A9E59AF03E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleAssist.Domain", "src\VehicleAssist.Domain\VehicleAssist.Domain.csproj", "{B32C5269-07A2-42D2-A653-A9E59AF03E5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleAssist.API", "src\VehicleAssist.API\VehicleAssist.API.csproj", "{94335FF7-90F4-4EAB-B958-932ED73791D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleAssist.API", "src\VehicleAssist.API\VehicleAssist.API.csproj", "{94335FF7-90F4-4EAB-B958-932ED73791D3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4A3F7111-3E40-472B-85C6-6A89508F4D4A} = {4A3F7111-3E40-472B-85C6-6A89508F4D4A}
 		{91EAFF41-B03A-4026-A75F-4B7F6FD7474B} = {91EAFF41-B03A-4026-A75F-4B7F6FD7474B}
 		{B32C5269-07A2-42D2-A653-A9E59AF03E5B} = {B32C5269-07A2-42D2-A653-A9E59AF03E5B}
 		{C53D13E8-13AF-4E6D-A946-C0914B6BC490} = {C53D13E8-13AF-4E6D-A946-C0914B6BC490}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\UnitTests\Application.UnitTests\Application.UnitTests.csproj", "{F649C4DD-3CD3-4E9B-988A-B881CC2F7025}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{94335FF7-90F4-4EAB-B958-932ED73791D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94335FF7-90F4-4EAB-B958-932ED73791D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94335FF7-90F4-4EAB-B958-932ED73791D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F649C4DD-3CD3-4E9B-988A-B881CC2F7025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F649C4DD-3CD3-4E9B-988A-B881CC2F7025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F649C4DD-3CD3-4E9B-988A-B881CC2F7025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F649C4DD-3CD3-4E9B-988A-B881CC2F7025}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{91EAFF41-B03A-4026-A75F-4B7F6FD7474B} = {BDBFF7F3-C7E3-421B-B3BF-F42206027C7A}
 		{B32C5269-07A2-42D2-A653-A9E59AF03E5B} = {BDBFF7F3-C7E3-421B-B3BF-F42206027C7A}
 		{94335FF7-90F4-4EAB-B958-932ED73791D3} = {BDBFF7F3-C7E3-421B-B3BF-F42206027C7A}
+		{F649C4DD-3CD3-4E9B-988A-B881CC2F7025} = {66242BFC-D3DE-4CA5-823F-0958A90E0894}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CB2374B-C6A5-424C-87C1-31707B288EDD}
