@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Domain.Company;
 
 namespace VehicleAssist.Domain.Service
 {
-    public class ServiceTime
+    public class ServiceTime:BaseEntity
     {
         public int ServiceTimeId { get; set; }
+        
+        public int CompanyServiceId { get; set; }
+
+        public DateTime StartDateTime { get; set; }
+
+        public DateTime EndDateTime { get; set; }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Domain.Service;
 
 namespace VehicleAssist.Domain.Company
 {
@@ -14,7 +15,7 @@ namespace VehicleAssist.Domain.Company
         public string? CompanyDescription { get; set; }
 
         public List<CompanyService> CompanyServices { get; set; }
-
+        
         public List<Deal> DealServices { get; set; }
 
 

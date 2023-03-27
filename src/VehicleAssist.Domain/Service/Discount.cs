@@ -8,13 +8,10 @@ using VehicleAssist.Domain.Company;
 
 namespace VehicleAssist.Domain.Service
 {
-    public class ServiceType:BaseEntity
+    public class Discount : BaseEntity
     {
-        public string ServiceTypeCode { get; set; }
-        
-        public string Description { get; set; }
-
+        public string DiscountTypeCode   { get; set; }
+        public int Description { get; set; }
         public List<CompanyService> CompanyServices { get; set; }
-
     }
 }

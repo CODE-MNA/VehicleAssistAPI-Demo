@@ -28,13 +28,7 @@ namespace VehicleAssist.Application.Customer
             chars[0] = char.ToUpper(chars[0]);
             ScheduleType =  new string(chars);
 
-
-
-
             }
-
-      
-
         }
     }
 }

@@ -11,6 +11,7 @@ using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
 using VehicleAssist.Domain.Notification;
 using VehicleAssist.Domain.Reminders;
+using VehicleAssist.Domain.Service;
 
 namespace VehicleAssist.Infrastructure.Data
 {
@@ -30,6 +31,11 @@ namespace VehicleAssist.Infrastructure.Data
 
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<Discount> Discounts { get; set; }
+
+        public DbSet<ServiceTime> ServiceTimes { get; set; }
+
+        public DbSet<ServiceType> ServiceTypes { get; set; }
 
         public DbSet<Reminder> Reminders { get; set; }
         public DbSet<Address> Addresses { get; set; }

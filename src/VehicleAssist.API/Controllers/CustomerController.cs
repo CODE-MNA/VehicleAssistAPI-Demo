@@ -299,9 +299,16 @@ namespace VehicleAssist.API.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpGet("companyServices")]
+        public async Task<IActionResult> GetCompanyServices()
+        {
+
+            CustomerCompanyServicesResults result = await _mediator.Send(new QueryCustomerCompanyServices() { });
+
+            return new JsonResult(result);
+        }
+
         #endregion
-
-
-
     }
 }

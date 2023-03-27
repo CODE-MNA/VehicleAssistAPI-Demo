@@ -96,7 +96,7 @@ namespace VehicleAssist.Infrastructure
             //Generic
             services.AddScoped<IBaseRepository<Vehicle>,EFRepository<Vehicle>>();
             services.AddScoped<IBaseRepository<Deal>, EFRepository<Deal>>();
-
+            services.AddScoped<IBaseRepository<CompanyService>, EFRepository<CompanyService>>();
 
         }
 

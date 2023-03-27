@@ -19,7 +19,5 @@ namespace VehicleAssist.Application.Repositories
         void Update(T entity);
         void Delete(T entity);
 
-       
-
     }
 }

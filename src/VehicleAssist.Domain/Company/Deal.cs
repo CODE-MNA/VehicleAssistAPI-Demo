@@ -8,10 +8,6 @@ namespace VehicleAssist.Domain.Company
 {
     public class Deal : BaseEntity
     {
-
-        /// <summary>
-        /// ADD ENTITY DATA MIGRATION
-        /// </summary>
         public int DealId { get; set; }
 
         public int MemberId { get; set; }
