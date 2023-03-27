@@ -10,7 +10,7 @@ namespace VehicleAssist.Infrastructure.NotificationService
     {
         public  Task CheckForNotificationAsync(CancellationToken stoppingToken);
 
-        public Task RescheduleChangedJobs(CancellationToken stoppingToken);
+        public void ScheduleNotificationJob(int notificationId , string content, DateTime timeToExecute, CancellationToken stoppingToken);
 
     }
 }

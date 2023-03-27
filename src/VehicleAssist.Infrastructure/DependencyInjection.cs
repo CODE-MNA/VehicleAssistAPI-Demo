@@ -22,6 +22,7 @@ using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Reminders;
 using VehicleAssist.Infrastructure.NotificationService;
+using Hangfire;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -64,6 +65,9 @@ namespace VehicleAssist.Infrastructure
             services.AddTransient<IVerificationEmail, VerificationEmail>();
 
             services.AddHostedService<BackgroundScheduler>();
+            services.AddHangfire(c => { });
+
+            services.AddHangfireServer();
 
             return services;
 
