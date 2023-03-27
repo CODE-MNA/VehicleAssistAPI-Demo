@@ -15,7 +15,7 @@ namespace VehicleAssist.Application.Authentication.Queries.Login
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string CellPhoneNumber { get; set; }
         public string CompanyName { get; set; }
