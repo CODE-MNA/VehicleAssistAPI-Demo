@@ -75,6 +75,7 @@ namespace VehicleAssist.Application.Customer.Commands
             {
                 events.Add(new NotificationAddedEvent()
                 {
+                    referenceId = reminder.ReminderId,
                     sendType = Domain.Notification.SendType.ReminderPreparation,
                     timeToSendNotification = item,
                     memberId = request.CustomerId,
@@ -84,6 +85,7 @@ namespace VehicleAssist.Application.Customer.Commands
 
             events.Add(new NotificationAddedEvent()
             {
+                referenceId= reminder.ReminderId,
                 sendType = Domain.Notification.SendType.FinalReminder,
                 timeToSendNotification = reminder.ReminderDateTime,
                 memberId = request.CustomerId,

@@ -104,7 +104,7 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IBaseRepository<Reminder>, EFRepository<Reminder>>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
             //Generic
             services.AddScoped<IBaseRepository<Vehicle>,EFRepository<Vehicle>>();

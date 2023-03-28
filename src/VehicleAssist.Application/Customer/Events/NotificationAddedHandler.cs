@@ -20,6 +20,8 @@ namespace VehicleAssist.Application.Customer.Events
        public int memberId;
         public DateTime timeToSendNotification;
         public string memberEmail;
+
+        public int referenceId;
     }
 
     internal class NotificationAddedHandler : INotificationHandler<NotificationAddedEvent>
@@ -55,7 +57,7 @@ namespace VehicleAssist.Application.Customer.Events
                 MemberId = eventData.memberId,
                 JobID = jobId,
                 TriggerTime = eventData.timeToSendNotification,
-               
+               ReferenceId = eventData.referenceId,
             };
 
 

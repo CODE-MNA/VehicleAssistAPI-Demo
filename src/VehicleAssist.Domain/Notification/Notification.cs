@@ -21,6 +21,8 @@ namespace VehicleAssist.Domain.Notification
 
         public DateTime TriggerTime { get; set; }
 
+        public int ReferenceId { get; set; }
+
     }
 
     public enum SendType

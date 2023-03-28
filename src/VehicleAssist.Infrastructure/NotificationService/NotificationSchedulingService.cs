@@ -28,9 +28,9 @@ namespace VehicleAssist.Infrastructure.NotificationService
             return jobId;
         }
 
-        public void DeleteJob()
+        public bool DeleteJob(string jobId)
         {
-
+           return BackgroundJob.Delete(jobId);
         }
 
 

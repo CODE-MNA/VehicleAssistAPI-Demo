@@ -10,6 +10,6 @@ namespace VehicleAssist.Infrastructure.NotificationService
     public interface INotificationSchedulingService
     {
         public string ScheduleNotificationJob(NotificationAddedEvent eventData);
-
+        public bool DeleteJob(string jobId);
     }
 }
