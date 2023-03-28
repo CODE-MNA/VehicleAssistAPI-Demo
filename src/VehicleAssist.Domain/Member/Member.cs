@@ -27,6 +27,9 @@ namespace VehicleAssist.Domain.Member
         public bool UserActivated { get; protected set; }
         public DateTime? UserActivatedDate { get; protected set; }
         
+        public List<Domain.Notification.Notification>?  Notifications { get; protected set; }
+
+
         protected Member()
         {
           

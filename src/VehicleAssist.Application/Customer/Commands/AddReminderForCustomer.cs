@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Application.Customer.Events;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Reminders;
+using VehicleAssist.Infrastructure.NotificationService;
 
 namespace VehicleAssist.Application.Customer.Commands
 {
@@ -37,30 +39,66 @@ namespace VehicleAssist.Application.Customer.Commands
         {
             ICustomerRepository _vehicleOwnerRepository;
             IUnitOfWork _unitOfWork;
+        IPublisher _publisher;
 
-            public AddReminderForCustomerCommandHandler(ICustomerRepository vehicleOwnerRepository, IUnitOfWork unitOfWork)
-            {
-                _vehicleOwnerRepository = vehicleOwnerRepository;
-                _unitOfWork = unitOfWork;
-            }
+        public AddReminderForCustomerCommandHandler(ICustomerRepository vehicleOwnerRepository, IUnitOfWork unitOfWork, IPublisher publisher)
+        {
+            _vehicleOwnerRepository = vehicleOwnerRepository;
+            _unitOfWork = unitOfWork;
+            _publisher = publisher;
+        }
 
-            public async Task<Unit> Handle(AddReminderForCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddReminderForCustomerCommand request, CancellationToken cancellationToken)
             {
 
             //Can refactor later to use the domain function
             Reminder reminder = new Reminder(request.Name, request.Description, request.ReminderDateTime, request.ServiceType, request.Latitude, request.Longitude);
 
+
+
             foreach (var item in request.ReminderSchedules)
             {
                 ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimeBefore, item.ScheduleType);
                 reminder.AddSchedule(newSchedule);
-
+ 
 
             }
             _vehicleOwnerRepository.AddReminderToCustomer(request.CustomerId, reminder);
 
                  _unitOfWork.CommitChanges();
 
+            // Prepare Notification Publishing
+
+            List<NotificationAddedEvent> events = new List<NotificationAddedEvent>();
+
+            foreach (var item in reminder.GetExtraScheduleDateTimes())
+            {
+                events.Add(new NotificationAddedEvent()
+                {
+                    sendType = Domain.Notification.SendType.ReminderPreparation,
+                    timeToSendNotification = item,
+                    memberId = request.CustomerId,
+                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {reminder.ReminderDateTime.ToString()}"
+                });
+            }
+
+            events.Add(new NotificationAddedEvent()
+            {
+                sendType = Domain.Notification.SendType.FinalReminder,
+                timeToSendNotification = reminder.ReminderDateTime,
+                memberId = request.CustomerId,
+                message = $"Hi, You have a reminder!\n {reminder.Name} : {reminder.Description}"
+            });
+
+
+
+            foreach (var item in events)
+            {
+             
+                  await  _publisher.Publish(item, CancellationToken.None);
+
+                
+            }
 
                 return Unit.Value;
             }

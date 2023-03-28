@@ -38,7 +38,11 @@ namespace VehicleAssist.Infrastructure.Data.Configurations
             builder.HasIndex(b => b.Email).IsUnique(true);
 
             builder.HasKey(m => m.MemberId);
-            
+
+            //Notifications
+            builder.HasMany(b => b.Notifications)
+                .WithOne(n => n.Member).HasForeignKey(x => x.MemberId);
+        
         }
     }
 }

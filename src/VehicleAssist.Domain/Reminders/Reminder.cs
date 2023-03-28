@@ -80,5 +80,41 @@ namespace VehicleAssist.Domain.Reminders
             ReminderAlarmSchedules = newSchedules;
         }
 
+        public List<DateTime> GetExtraScheduleDateTimes()
+        {
+            List<DateTime> schedulingDateTimes = new List<DateTime>();
+
+        
+
+            foreach (var item in ReminderAlarmSchedules)
+            {
+                DateTime time = ReminderDateTime;
+
+                switch (item.ScheduleType)
+                {
+                    case ScheduleType.Hours:
+
+                       time = ReminderDateTime.Subtract(TimeSpan.FromHours(item.TimePrior));
+
+                        break;
+                    case ScheduleType.Days:
+                        time = ReminderDateTime.Subtract(TimeSpan.FromDays(item.TimePrior));
+                        break;
+                    case ScheduleType.Weeks:
+                        time = ReminderDateTime.Subtract(TimeSpan.FromDays(item.TimePrior * 7));
+
+                        break;
+                    case ScheduleType.Minutes:
+                        time = ReminderDateTime.Subtract(TimeSpan.FromMinutes(item.TimePrior));
+                        break;
+                    default:
+                        
+                        break;
+                }
+                schedulingDateTimes.Add(time);
+            }
+
+            return schedulingDateTimes;
+        }
     }
 }

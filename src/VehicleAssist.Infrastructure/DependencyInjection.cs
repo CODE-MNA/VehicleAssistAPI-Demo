@@ -23,6 +23,8 @@ using VehicleAssist.Domain.Company;
 using VehicleAssist.Domain.Reminders;
 using VehicleAssist.Infrastructure.NotificationService;
 using Hangfire;
+using Hangfire.MemoryStorage;
+using VehicleAssist.Domain.Notification;
 
 namespace VehicleAssist.Infrastructure
 {
@@ -64,10 +66,15 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IVerificationEmail, VerificationEmail>();
 
-            services.AddHostedService<BackgroundScheduler>();
-            services.AddHangfire(c => { });
+            //services.AddHostedService<BackgroundScheduler>();
+            services.AddHangfire(h =>
+            {
+                h.UseMemoryStorage();
+            });
 
             services.AddHangfireServer();
+            services.AddScoped<INotificationSchedulingService, NotificationSchedulingService>();
+            services.AddScoped<INotificationEmail, NotificationEmail>();
 
             return services;
 
@@ -103,6 +110,7 @@ namespace VehicleAssist.Infrastructure
             services.AddScoped<IBaseRepository<Vehicle>,EFRepository<Vehicle>>();
             services.AddScoped<IBaseRepository<Deal>, EFRepository<Deal>>();
             services.AddScoped<IBaseRepository<CompanyService>, EFRepository<CompanyService>>();
+            services.AddScoped<IBaseRepository<Notification>, EFRepository<Notification>>();
 
         }
 
