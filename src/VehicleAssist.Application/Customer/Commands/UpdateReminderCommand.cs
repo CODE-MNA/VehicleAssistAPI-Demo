@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleAssist.Application.Customer.Events;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Reminders;
 
@@ -34,11 +35,16 @@ namespace VehicleAssist.Application.Customer.Commands
     {
         IBaseRepository<Reminder> _reminderRepository;
         IUnitOfWork _unitOfWork;
+        IPublisher _publisher;
+     
 
-        public UpdateReminderCommandHandler(IBaseRepository<Reminder> reminderRepository, IUnitOfWork unitOfWork)
+        public UpdateReminderCommandHandler(IBaseRepository<Reminder> reminderRepository, 
+            IUnitOfWork unitOfWork, IPublisher publisher)
         {
             _reminderRepository = reminderRepository;
             _unitOfWork = unitOfWork;
+            _publisher = publisher;
+          
         }
 
         public async Task<Unit> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
@@ -64,7 +70,41 @@ namespace VehicleAssist.Application.Customer.Commands
             _reminderRepository.Update(reminder);
 
             _unitOfWork.CommitChanges();
+            List<NotificationUpdatedEvent> events = new List<NotificationUpdatedEvent>();
 
+            foreach (var item in reminder.GetExtraScheduleDateTimes())
+            {
+
+
+                events.Add(new NotificationUpdatedEvent()
+                {
+                    referenceId = reminder.ReminderId,
+                    sendType = Domain.Notification.SendType.ReminderPreparation,
+                    timeToSendNotification = item,
+                    memberId = request.CustomerId,
+                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {reminder.ReminderDateTime.ToString()}"
+                });
+            }
+
+            events.Add(new NotificationUpdatedEvent()
+            {
+                referenceId = reminder.ReminderId,
+                sendType = Domain.Notification.SendType.FinalReminder,
+                timeToSendNotification = reminder.ReminderDateTime,
+                memberId = request.CustomerId,
+                message = $"Hi, You have a reminder!\n {reminder.Name} : {reminder.Description}"
+                
+            });
+
+
+
+            foreach (var item in events)
+            {
+
+                await _publisher.Publish(item, CancellationToken.None);
+
+
+            }
 
 
             return Unit.Value;
