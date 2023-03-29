@@ -30,12 +30,15 @@ namespace VehicleAssist.Application.Customer
 
         public decimal ActualPrice { get; set; }
 
+        public string CompanyName { get; set; }
+
         public static CompanyServiceDTO FromCompanyService(CompanyService companyService)
         {
             return new CompanyServiceDTO()
             {
                 CompanyServiceId = companyService.CompanyServiceId,
                 MemberId = companyService.MemberId,
+                CompanyName = companyService.Company.CompanyName,
                 ServiceTypeCode = companyService.ServiceTypeCode,
                 ServiceDescription = companyService.ServiceType.Description,
                 Name = companyService.Name,
