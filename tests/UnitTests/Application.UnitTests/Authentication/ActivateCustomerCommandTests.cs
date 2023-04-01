@@ -105,9 +105,9 @@ namespace Application.UnitTests
             var result = await handler.Handle(command, default);
 
             //Assert
-            mockMember.Verify(m => m.ActivateUser(), Times.Once); 
-          
-
+          //  mockMember.Verify(m => m.ActivateUser(), Times.Once); 
+      
+        Assert.Equal(mockMember.Object.UserActivated,true);
         }
 
       
