@@ -68,16 +68,7 @@ namespace Application.UnitTests
 
             var handler = new ActivateCustomerHandler(_verificationInterface.Object, _memberRepository.Object, _unitOfWork.Object);
 
-
-
-
-
             //Act
-           
-
-               
-          
-
             var ex =await  Assert.ThrowsAsync<Exception>(()=>handler.Handle(command, default));
 
 
