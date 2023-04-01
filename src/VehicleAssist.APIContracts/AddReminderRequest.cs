@@ -16,7 +16,7 @@ namespace VehicleAssist.APIContracts
         public string Description { get; set; }
 
         // LocalDate LocalTime OffsetFromUTCOfThatLocalTime
-        public string ReminderDateTime { get; set; }
+        public DateTime ReminderDateTime { get; set; }
 
         public string TimeZoneOffset { get; set; }
 

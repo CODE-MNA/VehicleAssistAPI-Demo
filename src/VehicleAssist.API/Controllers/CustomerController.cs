@@ -207,17 +207,11 @@ namespace VehicleAssist.API.Controllers
                 }
             }
 
-
-            DateTime utcTime = DateTime.Parse(request.ReminderDateTime);
-            TimeSpan offset = TimeSpan.Parse(request.TimeZoneOffset);
-            DateTime localTime = utcTime.Add(offset);
-
-           DateTimeOffset time =  DateTimeOffset.Parse(localTime.ToString() + " " + offset.ToString());
-           
-
-
-
-
+            
+           DateTime utcTime = request.ReminderDateTime;
+           TimeSpan offset = TimeSpan.Parse(request.TimeZoneOffset);
+           DateTime localTime = new DateTime(utcTime.Add(offset).Ticks ,DateTimeKind.Local);
+           DateTimeOffset time =  new DateTimeOffset(localTime,offset);
 
             await _mediator.Send(new AddReminderForCustomerCommand() 
             { 
@@ -235,8 +229,6 @@ namespace VehicleAssist.API.Controllers
             });
 
             return  Ok();
-
-
         }
 
         [HttpPut("reminders/{id}")]

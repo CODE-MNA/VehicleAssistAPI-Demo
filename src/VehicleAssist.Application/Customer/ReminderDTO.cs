@@ -14,7 +14,7 @@ namespace VehicleAssist.Application.Customer
             ReminderId = reminderId;
             Name = name;
             Description = description;
-            ReminderDateTime = reminderDateTime;
+            ReminderDateTime = new DateTime(reminderDateTime.Ticks,DateTimeKind.Utc);
             ServiceType = serviceType;
             Latitude = latitude;
             Longitude = longitude;
