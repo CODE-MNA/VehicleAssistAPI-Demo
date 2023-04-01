@@ -208,7 +208,12 @@ namespace VehicleAssist.API.Controllers
             }
 
 
-            DateTimeOffset time = DateTimeOffset.Parse(request.ReminderDateTime + " " + request.TimeZoneOffset);
+            DateTime utcTime = DateTime.Parse(request.ReminderDateTime);
+            TimeSpan offset = TimeSpan.Parse(request.TimeZoneOffset);
+            DateTime localTime = utcTime.Add(offset);
+
+           DateTimeOffset time =  DateTimeOffset.Parse(localTime.ToString() + " " + offset.ToString());
+           
 
 
 
