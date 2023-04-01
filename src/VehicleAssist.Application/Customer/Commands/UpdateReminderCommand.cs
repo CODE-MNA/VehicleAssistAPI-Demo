@@ -17,7 +17,7 @@ namespace VehicleAssist.Application.Customer.Commands
 
         public string Description { get; set; }
 
-        public DateTime ReminderDateTime { get; set; }
+        public DateTimeOffset ReminderDateTime { get; set; }
 
 
         public string ServiceType { get; set; }
@@ -36,19 +36,21 @@ namespace VehicleAssist.Application.Customer.Commands
         IBaseRepository<Reminder> _reminderRepository;
         IUnitOfWork _unitOfWork;
         IPublisher _publisher;
-     
+     INotificationRepository _notificationRepository;
 
-        public UpdateReminderCommandHandler(IBaseRepository<Reminder> reminderRepository, 
-            IUnitOfWork unitOfWork, IPublisher publisher)
+        public UpdateReminderCommandHandler(IBaseRepository<Reminder> reminderRepository, IUnitOfWork unitOfWork,
+            IPublisher publisher, INotificationRepository notificationRepository)
         {
             _reminderRepository = reminderRepository;
             _unitOfWork = unitOfWork;
             _publisher = publisher;
-          
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<Unit> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
         {
+            DateTime utcTime = request.ReminderDateTime.UtcDateTime;
+
             var reminder = _reminderRepository.GetById(request.ReminderId);
 
             if (reminder == null)
@@ -65,46 +67,80 @@ namespace VehicleAssist.Application.Customer.Commands
                 schedules.Add(time);
             }
 
-            reminder.UpdateReminderData(request.Name,request.Description,request.ReminderDateTime,request.ServiceType,request.Latitude,request.Longitude,schedules);
+            reminder.UpdateReminderData(request.Name,request.Description,utcTime,request.ServiceType,request.Latitude,request.Longitude,schedules);
 
             _reminderRepository.Update(reminder);
 
             _unitOfWork.CommitChanges();
-            List<NotificationUpdatedEvent> events = new List<NotificationUpdatedEvent>();
 
-            foreach (var item in reminder.GetExtraScheduleDateTimes())
+            //Delete -----
+            List<string?>? jobs = _notificationRepository.GetJobIdsUsingReferenceId(request.ReminderId);
+
+            if (jobs == null)
             {
+                return Unit.Value;
 
-
-                events.Add(new NotificationUpdatedEvent()
-                {
-                    referenceId = reminder.ReminderId,
-                    sendType = Domain.Notification.SendType.ReminderPreparation,
-                    timeToSendNotification = item,
-                    memberId = request.CustomerId,
-                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {reminder.ReminderDateTime.ToString()}"
-                });
             }
 
-            events.Add(new NotificationUpdatedEvent()
+
+            //Publish event
+
+            foreach (var item in jobs)
+            {
+                if (string.IsNullOrWhiteSpace(item)) continue;
+
+                var notify = new NotificationDeletedEvent()
+                {
+                    jobId = item
+                };
+
+                await _publisher.Publish(notify);
+            }
+
+            //ADd ----
+
+            List<NotificationAddedEvent> events = new List<NotificationAddedEvent>();
+
+            events.Add(new NotificationAddedEvent()
             {
                 referenceId = reminder.ReminderId,
                 sendType = Domain.Notification.SendType.FinalReminder,
                 timeToSendNotification = reminder.ReminderDateTime,
                 memberId = request.CustomerId,
                 message = $"Hi, You have a reminder!\n {reminder.Name} : {reminder.Description}"
-                
+
             });
 
-
-
-            foreach (var item in events)
+            foreach (var item in reminder.GetExtraScheduleDateTimes())
             {
 
-                await _publisher.Publish(item, CancellationToken.None);
 
+                events.Add(new NotificationAddedEvent()
+                {
+                    referenceId = reminder.ReminderId,
+                    sendType = Domain.Notification.SendType.ReminderPreparation,
+                    timeToSendNotification = item,
+                    memberId = request.CustomerId,
+                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {request.ReminderDateTime.LocalDateTime.ToString()}"
+                });
+            }
+
+
+            foreach (var addedEvent in events)
+            {
+
+             
+
+               await _publisher.Publish(addedEvent, default);
 
             }
+
+
+            
+
+
+
+          
 
 
             return Unit.Value;

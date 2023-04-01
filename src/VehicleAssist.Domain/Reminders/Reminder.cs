@@ -23,16 +23,16 @@ namespace VehicleAssist.Domain.Reminders
 
         }
 
-        public Reminder(string name, string description, DateTime reminderDateTime, string serviceType, float latitude, float longitude)
+        public Reminder(string name, string description, DateTimeOffset reminderDateTime, string serviceType, float latitude, float longitude )
         {
 
             Name = name;
             Description = description;
-            ReminderDateTime = reminderDateTime;
+            ReminderDateTime = reminderDateTime.UtcDateTime;
             ServiceType = serviceType;
             Latitude = latitude;
             Longitude = longitude;
-
+            TimeZoneOffset = reminderDateTime.Offset.ToString();
 
         }
 
@@ -55,7 +55,7 @@ namespace VehicleAssist.Domain.Reminders
         public float Latitude { get; private set; }
         public float Longitude { get; private set; }
 
-
+        public string TimeZoneOffset { get;  set; }
         public int CustomerId { get;  set; }
         public Customer.Customer? Customer { get;  set; }
 

@@ -207,13 +207,17 @@ namespace VehicleAssist.API.Controllers
                 }
             }
 
-            
 
-         
+            DateTimeOffset time = DateTimeOffset.Parse(request.ReminderDateTime + " " + request.TimeZoneOffset);
+
+
+
+
+
             await _mediator.Send(new AddReminderForCustomerCommand() 
             { 
                 CustomerId = possibleCustomerId,
-                ReminderDateTime = request.ReminderDateTime,
+                ReminderDateTime = time,
                 Description = request.Description,
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,
@@ -247,14 +251,14 @@ namespace VehicleAssist.API.Controllers
                 }
             }
 
-
+            DateTimeOffset time = DateTimeOffset.Parse(request.ReminderDateTime + " " + request.TimeZoneOffset);
 
 
             await _mediator.Send(new UpdateReminderCommand()
             {
                 ReminderId = id,
                 CustomerId = possibleCustomerId,
-                ReminderDateTime = request.ReminderDateTime,
+                ReminderDateTime = time ,
                 Description = request.Description,
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,

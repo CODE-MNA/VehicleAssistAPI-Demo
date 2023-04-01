@@ -21,9 +21,9 @@ namespace VehicleAssist.Application.Customer.Commands
 
         public string Description { get; set; }
 
-        public DateTime ReminderDateTime { get; set; }
+        public DateTimeOffset ReminderDateTime { get; set; }
 
-
+        
         public string ServiceType { get; set; }
 
         public float Latitude { get; set; }
@@ -51,8 +51,12 @@ namespace VehicleAssist.Application.Customer.Commands
         public async Task<Unit> Handle(AddReminderForCustomerCommand request, CancellationToken cancellationToken)
             {
 
+       
+
+           DateTime time =  request.ReminderDateTime.UtcDateTime;
+
             //Can refactor later to use the domain function
-            Reminder reminder = new Reminder(request.Name, request.Description, request.ReminderDateTime, request.ServiceType, request.Latitude, request.Longitude);
+            Reminder reminder = new Reminder(request.Name, request.Description,time, request.ServiceType, request.Latitude, request.Longitude);
 
 
 
@@ -79,7 +83,7 @@ namespace VehicleAssist.Application.Customer.Commands
                     sendType = Domain.Notification.SendType.ReminderPreparation,
                     timeToSendNotification = item,
                     memberId = request.CustomerId,
-                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {reminder.ReminderDateTime.ToString()}"
+                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {request.ReminderDateTime.LocalDateTime.ToString()}"
                 });
             }
 

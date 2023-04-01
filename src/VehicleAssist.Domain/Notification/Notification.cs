@@ -23,6 +23,7 @@ namespace VehicleAssist.Domain.Notification
 
         public int ReferenceId { get; set; }
 
+        public DateTimeOffset TimeZoneOffset { get; set; }
     }
 
     public enum SendType

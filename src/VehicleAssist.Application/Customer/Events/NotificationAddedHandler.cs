@@ -18,7 +18,7 @@ namespace VehicleAssist.Application.Customer.Events
        public SendType sendType;
        public string message;
        public int memberId;
-        public DateTime timeToSendNotification;
+        public DateTimeOffset timeToSendNotification;
         public string memberEmail;
 
         public int referenceId;
@@ -56,7 +56,7 @@ namespace VehicleAssist.Application.Customer.Events
                 Content = eventData.message,
                 MemberId = eventData.memberId,
                 JobID = jobId,
-                TriggerTime = eventData.timeToSendNotification,
+                TriggerTime = eventData.timeToSendNotification.UtcDateTime,
                ReferenceId = eventData.referenceId,
             };
 

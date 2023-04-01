@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleAssist.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using VehicleAssist.Infrastructure.Data;
 namespace VehicleAssist.Infrastructure.Migrations
 {
     [DbContext(typeof(VehicleAssistDBContext))]
-    partial class VehicleAssistDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230331004328_addedTimeZoneCompensation")]
+    partial class addedTimeZoneCompensation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -313,10 +316,6 @@ namespace VehicleAssist.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ServiceType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeZoneOffset")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
