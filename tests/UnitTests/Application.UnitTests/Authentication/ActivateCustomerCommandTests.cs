@@ -8,7 +8,7 @@ using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
 using Xunit;
 
-namespace Application.UnitTests
+namespace Application.UnitTests.Authentication
 {
     public class ActivateCustomerCommandTests
     {

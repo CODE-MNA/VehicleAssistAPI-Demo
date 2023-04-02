@@ -8,7 +8,7 @@ using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
 using Xunit;
 
-namespace Application.UnitTests
+namespace Application.UnitTests.Authentication
 {
     public class RegisterMemberCommandTests
     {
@@ -27,8 +27,10 @@ namespace Application.UnitTests
             _verificationInterface = new();
             _memberRepository = new();
             _unitOfWork = new();
+            _passwordHasher = new();
         }
 
+        [Fact]
         public async Task Handle_ShouldRegisterCustomer_WhenCompanyInformationNotProvided_WhenValidDataProvided(){
 
 
@@ -59,6 +61,7 @@ namespace Application.UnitTests
 
         }
 
+        [Fact]
         public async Task Handle_ShouldRegisterCompany_WhenCompanyInformationProvided_WhenValidDataProvided(){
 
 
