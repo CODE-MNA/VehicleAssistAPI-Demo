@@ -25,6 +25,13 @@ namespace VehicleAssist.Application.Customer
 
         public static DealDTO FromDeal(Deal deal)
         {
+            string companyName = "";
+       
+            if (deal.Company != null)
+            {
+                companyName = deal.Company.CompanyName;
+            }
+
             return new DealDTO()
             {
                 DealId = deal.DealId,
@@ -33,7 +40,10 @@ namespace VehicleAssist.Application.Customer
                 StartDate = deal.StartDate,
                 EndDate = deal.EndDate,
                 MemberId = deal.MemberId,
-                CompanyName = deal.Company.CompanyName,
+
+              
+
+                CompanyName = companyName,
             };
         }
     }
