@@ -15,6 +15,7 @@ using VehicleAssist.Application.Customer.Queries;
 using VehicleAssist.Application.Repositories;
 using VehicleAssist.Domain.Customer;
 using VehicleAssist.Domain.Member;
+using VehicleAssist.Domain.Reminders;
 using Xunit;
 
 namespace Application.UnitTests.Vehicle
@@ -103,8 +104,11 @@ namespace Application.UnitTests.Vehicle
             //Act
             CancellationToken cancellationToken = new CancellationToken();
             var result = await handler.Handle(queryVehicleCommand, cancellationToken);
+            VehicleDTO expectedResult = new VehicleDTO();
+            expectedResult.VehicleId = 1;
 
             //Assert
+            Assert.Equal(expectedResult.VehicleId.ToString(), result.VehicleId.ToString());
             Assert.NotNull(result);
         }
 
@@ -117,9 +121,14 @@ namespace Application.UnitTests.Vehicle
             _vehicleRepository.Setup(a => a.GetById(It.IsAny<int>())).Returns((VehicleAssist.Domain.Customer.Vehicle?)null);
 
             var handler = new UpdateVehicleInformationCommandHandler(_vehicleRepository.Object, _unitOfWork.Object);
-            
 
+            //Act
+            var ex = await Assert.ThrowsAsync<VehicleDoesntExistException>(() => handler.Handle(updateCommand, default));
+            string expected = "Can't Update Vehicle";
+
+            //Assert
+            Assert.Equal(expected, ex.Message);
             _unitOfWork.Verify(x => x.CommitChanges(), Times.Never);
-        }
+        } 
     }
 }
