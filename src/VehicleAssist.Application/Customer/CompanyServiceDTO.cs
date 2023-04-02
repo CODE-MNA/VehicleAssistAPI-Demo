@@ -34,18 +34,26 @@ namespace VehicleAssist.Application.Customer
 
         public static CompanyServiceDTO FromCompanyService(CompanyService companyService)
         {
+            string companyName = companyService.Company != null ? companyService.Company.CompanyName : "";
+
+
+            string description = companyService.ServiceType != null ? companyService.ServiceType.Description : "";
+            int discountDescription = companyService.Discount != null ? companyService.Discount.Description : 0;
+
+
+
             return new CompanyServiceDTO()
             {
                 CompanyServiceId = companyService.CompanyServiceId,
                 MemberId = companyService.MemberId,
-                CompanyName = companyService.Company.CompanyName,
+                CompanyName = companyName,
                 ServiceTypeCode = companyService.ServiceTypeCode,
-                ServiceDescription = companyService.ServiceType.Description,
+                ServiceDescription = description,
                 Name = companyService.Name,
                 Description = companyService.Description,
                 Price = companyService.Price,
                 DiscountTypeCode = companyService.DiscountTypeCode,
-                DiscountDescription = companyService.Discount.Description,
+                DiscountDescription = discountDescription,
                 DiscountAmount = companyService.DiscountAmount,
                 ActualPrice = companyService.ActualPrice,
 

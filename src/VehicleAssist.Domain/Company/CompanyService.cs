@@ -32,7 +32,7 @@ namespace VehicleAssist.Domain.Company
         public ServiceType? ServiceType { get; set; }
         public Discount? Discount { get; set; }
 
-        public List<ServiceTime> ServiceTimes { get; set; }
-        public List<Appointment> Appointments { get; private set; }
+        public List<ServiceTime>? ServiceTimes { get; set; }
+        public List<Appointment>? Appointments { get; private set; }
     }
 }
