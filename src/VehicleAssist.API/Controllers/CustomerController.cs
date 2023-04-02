@@ -311,5 +311,21 @@ namespace VehicleAssist.API.Controllers
         }
 
         #endregion
+
+        #region Notifications
+
+        [HttpGet("notifications")]
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> GetCustomerNotifications()
+        { 
+            // get user id from token
+            int possibleCustomerId = User.GetMemberIdFromClaimsPrincipal();
+
+            // call service for getting notifications 
+            NotificationsForCustomerResponse result = await _mediator.Send(new NotificationsForCustomerRequest() { CustomerId = possibleCustomerId });
+
+            return new JsonResult(result);
+        }
+        #endregion
     }
 }
