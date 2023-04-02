@@ -12,6 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Company\**" />
+    <EmbeddedResource Remove="Company\**" />
+    <None Remove="Company\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />

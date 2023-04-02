@@ -15,15 +15,12 @@ namespace VehicleAssist.Application.Customer.Commands
         public class AddReminderForCustomerCommand : IRequest<Unit>
         {
 
-   
-
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public DateTimeOffset ReminderDateTime { get; set; }
-
-        
+      
         public string ServiceType { get; set; }
 
         public float Latitude { get; set; }
@@ -39,7 +36,7 @@ namespace VehicleAssist.Application.Customer.Commands
         {
             ICustomerRepository _vehicleOwnerRepository;
             IUnitOfWork _unitOfWork;
-        IPublisher _publisher;
+            IPublisher _publisher;
 
         public AddReminderForCustomerCommandHandler(ICustomerRepository vehicleOwnerRepository, IUnitOfWork unitOfWork, IPublisher publisher)
         {
@@ -51,8 +48,7 @@ namespace VehicleAssist.Application.Customer.Commands
         public async Task<Unit> Handle(AddReminderForCustomerCommand request, CancellationToken cancellationToken)
             {
 
-       
-
+  
            DateTime time =  request.ReminderDateTime.UtcDateTime;
 
             //Can refactor later to use the domain function
