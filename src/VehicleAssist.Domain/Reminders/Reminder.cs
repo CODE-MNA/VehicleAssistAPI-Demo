@@ -84,7 +84,10 @@ namespace VehicleAssist.Domain.Reminders
         {
             List<DateTime> schedulingDateTimes = new List<DateTime>();
 
-        
+            if(ReminderAlarmSchedules == null)
+            {
+                return schedulingDateTimes;
+            }
 
             foreach (var item in ReminderAlarmSchedules)
             {

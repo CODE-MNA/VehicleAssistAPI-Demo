@@ -55,12 +55,15 @@ namespace VehicleAssist.Application.Customer.Commands
             Reminder reminder = new Reminder(request.Name, request.Description,time, request.ServiceType, request.Latitude, request.Longitude);
 
 
-
-            foreach (var item in request.ReminderSchedules)
+            if(request.ReminderSchedules != null && request.ReminderSchedules.Count > 0)
             {
-                ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimeBefore, item.ScheduleType);
-                reminder.AddSchedule(newSchedule);
+                foreach (var item in request.ReminderSchedules)
+                {
+                    ReminderAlarmSchedule newSchedule = ReminderAlarmSchedule.CreateReminderSchedule(item.TimeBefore, item.ScheduleType);
+                    reminder.AddSchedule(newSchedule);
  
+
+                }
 
             }
             _vehicleOwnerRepository.AddReminderToCustomer(request.CustomerId, reminder);
@@ -71,16 +74,21 @@ namespace VehicleAssist.Application.Customer.Commands
 
             List<NotificationAddedEvent> events = new List<NotificationAddedEvent>();
 
-            foreach (var item in reminder.GetExtraScheduleDateTimes())
+            var times = reminder.GetExtraScheduleDateTimes();
+            if(times != null && times.Count > 0)
             {
-                events.Add(new NotificationAddedEvent()
+
+                foreach (var item in times)
                 {
-                    referenceId = reminder.ReminderId,
-                    sendType = Domain.Notification.SendType.ReminderPreparation,
-                    timeToSendNotification = item,
-                    memberId = request.CustomerId,
-                    message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {request.ReminderDateTime.LocalDateTime.ToString()}"
-                });
+                    events.Add(new NotificationAddedEvent()
+                    {
+                        referenceId = reminder.ReminderId,
+                        sendType = Domain.Notification.SendType.ReminderPreparation,
+                        timeToSendNotification = item,
+                        memberId = request.CustomerId,
+                        message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {request.ReminderDateTime.LocalDateTime.ToString()}"
+                    });
+                }
             }
 
             events.Add(new NotificationAddedEvent()

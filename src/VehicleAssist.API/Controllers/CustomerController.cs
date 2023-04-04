@@ -200,10 +200,13 @@ namespace VehicleAssist.API.Controllers
             List<ReminderScheduleDTO> inputSchedules = new List<ReminderScheduleDTO>();
 
             if(request.Schedules != null) {
-                foreach (var item in request.Schedules)
+                if (request.Schedules.Count > 0)
                 {
-                    var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
-                    inputSchedules.Add(entry);
+                    foreach (var item in request.Schedules)
+                    {
+                        var entry = new ReminderScheduleDTO(item.TimeBefore, item.ScheduleType);
+                        inputSchedules.Add(entry);
+                    }
                 }
             }
 
@@ -247,9 +250,10 @@ namespace VehicleAssist.API.Controllers
                     inputSchedules.Add(entry);
                 }
             }
-
-            DateTimeOffset time = DateTimeOffset.Parse(request.ReminderDateTime + " " + request.TimeZoneOffset);
-
+            DateTime utcTime = request.ReminderDateTime;
+            TimeSpan offset = TimeSpan.Parse(request.TimeZoneOffset);
+            DateTime localTime = new DateTime(utcTime.Add(offset).Ticks, DateTimeKind.Local);
+            DateTimeOffset time = new DateTimeOffset(localTime, offset);
 
             await _mediator.Send(new UpdateReminderCommand()
             {
