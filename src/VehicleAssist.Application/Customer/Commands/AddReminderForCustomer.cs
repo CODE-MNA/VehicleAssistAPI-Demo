@@ -74,6 +74,8 @@ namespace VehicleAssist.Application.Customer.Commands
 
             List<NotificationAddedEvent> events = new List<NotificationAddedEvent>();
 
+            DateTime localTime = request.ReminderDateTime.LocalDateTime;
+
             var times = reminder.GetExtraScheduleDateTimes();
             if(times != null && times.Count > 0)
             {
@@ -86,7 +88,7 @@ namespace VehicleAssist.Application.Customer.Commands
                         sendType = Domain.Notification.SendType.ReminderPreparation,
                         timeToSendNotification = item,
                         memberId = request.CustomerId,
-                        message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {request.ReminderDateTime.LocalDateTime.ToString()}"
+                        message = $"Hi, we are reminding you that you have to do : {reminder.Name} on {localTime}"
                     });
                 }
             }

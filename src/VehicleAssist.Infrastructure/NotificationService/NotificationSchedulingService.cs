@@ -23,7 +23,7 @@ namespace VehicleAssist.Infrastructure.NotificationService
         public string ScheduleNotificationJob(NotificationAddedEvent eventData)
         {
             string jobId = BackgroundJob.Schedule(() => ExecuteNotifications(eventData.memberEmail,
-                eventData.memberId,eventData.message,eventData.sendType) , eventData.timeToSendNotification);
+                eventData.memberId,eventData.message,eventData.sendType) , eventData.timeToSendNotification.UtcDateTime);
 
             return jobId;
         }
