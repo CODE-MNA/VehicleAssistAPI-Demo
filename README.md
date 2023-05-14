@@ -5,6 +5,6 @@ Developed using C# ASP.NET.
 This repository is for codebase demonstration purposes only.
 
 # Team members
-Hyunchul Kim
-Kimberly Rose Dela Cruz
-Muhammad Noman Ahmed
+- Hyunchul Kim
+- Kimberly Rose Dela Cruz
+- Muhammad Noman Ahmed
