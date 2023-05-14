@@ -1,5 +1,6 @@
 # Vehicle Assist Backend
 This solution is the system for the backend of the vehicle assist application
+Developed using C# ASP.NET.
 
 This repository is for codebase demonstration purposes only.
 
