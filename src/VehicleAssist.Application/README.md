@@ -1,3 +1,3 @@
 # Application Logic
 
-## Folders for each usecase
+## Folders for each feature
