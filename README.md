@@ -6,6 +6,9 @@ Developed using C# ASP.NET.
 
 This repository is for codebase demonstration purposes only.
 
+# ER Diagram
+![Vehicle Assist ERD](https://github.com/CODE-MNA/VehicleAssistAPI-Demo/assets/97069432/d97042e8-6947-4992-a384-f8b5252e7e0a)
+
 # Implemented Features
 - Users can signup and login (Customer or Company)
 - Customers can enter information about their vehicles and register vehicle profiles
